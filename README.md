@@ -16,3 +16,4 @@ Benvinguts al meu repository de Python.
 - [Bateria 1.5](bateria%201-5.py)
 #### Bateria 2
 - [Bateria 2.1](bateria2-1.py)
+- [Bateria 2.2](bateria2-2.py)
