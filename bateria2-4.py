@@ -11,4 +11,4 @@ elif nota == 7 or nota == 8:
 elif nota == 9 or nota == 10:
   print("Excel·lent")
 else:
-  print("La nota no pot ser superior a 10.")
+  print("La nota no pot ser inferior a 0 ni superior a 10.")
