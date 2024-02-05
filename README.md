@@ -3,9 +3,11 @@
 Benvinguts al meu repository de Python.
 
 ## Els meus programes
-
+### Exercicis de classe
 - [Hello World](hello_world.py)
-- [Nùmero factorial](factorial.py)
+- [Nùmero factorial amb funció break](factorial.py)
+- [Nùmero factorial amb "for"](factorialfor.py)
+- [Taula de multiplicació amb "for"](multiplicacionumero.py)
 
 ### Bateria de programes
 #### Bateria 1
