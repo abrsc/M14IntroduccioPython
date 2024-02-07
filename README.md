@@ -10,7 +10,7 @@ Benvinguts al meu repository de Python.
 - [Taula de multiplicació amb "for"](multiplicacionumero.py)
 - [Pregunta de DNI](preguntaDNI.py)
 - [Verificació de nùmero de telefon](verificacionumero.py)
-
+- [Concatenar paraules](concatenacio.py)
 ### Bateria de programes
 #### Bateria 1 - variables
 - [Bateria 1.1](bateria%201-1.py)
@@ -25,4 +25,4 @@ Benvinguts al meu repository de Python.
 - [Bateria 2.4](bateria2-4.py)
 - [Bateria 2.5](bateria2-5.py)
 #### Bateria 3 - while
-- [Bateria 3.1]()
+- [Bateria 3.1](bateria3-1.py)
