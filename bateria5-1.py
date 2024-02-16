@@ -10,6 +10,3 @@ while True:
         break
     else:
         llista.append(int(num))
-
-
-        
