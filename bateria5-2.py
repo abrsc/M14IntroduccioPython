@@ -9,8 +9,8 @@ while True:
         llista.append(int(num))
         resultat += 1
 llista.sort()
-print(llista[0])
-print(llista[resultat])
+print("El mínim valor és: ", llista[0])
+print("El màxim valor és: ", llista[resultat])
 
 
         
