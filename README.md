@@ -31,4 +31,4 @@ Benvinguts al meu repository de Python.
 ## Projecte pygame
 ### Sprites
 #### Nau protagonista
-<img src="NavetteSpaciale.png" alt="Nau Protagonista" width="200"/>
+<img src="NavetteSpaciale.png" alt="Nau Protagonista" width="100"/>
