@@ -27,3 +27,8 @@ Benvinguts al meu repository de Python.
 #### Bateria 3 - while
 - [Bateria 3.1](bateria3-1.py)
 - [Bateria 3.2](bateria3-2.py)
+
+## Projecte pygame
+### Sprites
+#### Nau protagonista
+<img src="NavetteSpaciale.png" alt="Nau Protagonista" width="200"/>
