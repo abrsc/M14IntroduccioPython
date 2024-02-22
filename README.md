@@ -30,6 +30,9 @@ Benvinguts al meu repository de Python.
 #### Bateria 3 - while
 - [Bateria 3.1](bateria3-1.py)
 - [Bateria 3.2](bateria3-2.py)
+- [Bateria 3.3](bateria3-3.py)
+- [Bateria 3.4](bateria3-4.py)
+- [Bateria 3.5]()
 
 #### Bateria 5 - Llistes (arrays)
 - [Bateria 5.1](bateria5-1.py)
