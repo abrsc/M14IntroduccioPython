@@ -11,6 +11,9 @@ Benvinguts al meu repository de Python.
 - [Pregunta de DNI](preguntaDNI.py)
 - [Verificació de nùmero de telefon](verificacionumero.py)
 - [Concatenar paraules](concatenacio.py)
+- [PyCalc (Calculadora interactiva)](pycalc.py)
+- [Definicions i aleatori](daus.py)
+- [Joc amb les definicions](joc.py)
 ### Bateria de programes
 #### Bateria 1 - variables
 - [Bateria 1.1](bateria%201-1.py)
@@ -27,6 +30,10 @@ Benvinguts al meu repository de Python.
 #### Bateria 3 - while
 - [Bateria 3.1](bateria3-1.py)
 - [Bateria 3.2](bateria3-2.py)
+
+#### Bateria 5 - Llistes (arrays)
+- [Bateria 5.1](bateria5-1.py)
+- [Bateria 5.2](bateria5-2.py)
 
 ## Projecte pygame
 ### Sprites
