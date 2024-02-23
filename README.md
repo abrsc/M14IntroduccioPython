@@ -43,5 +43,6 @@ Benvinguts al meu repository de Python.
 #### Nau protagonista
 <img src="NavetteSpaciale.png" alt="Nau protagonista" width="100"/>
 
-##### Tret nau protagonista
+##### Trets nau protagonista
 <img src="tretnau.png" alt="Tret nau" width="100"/>
+<img src="tretnau2.png" alt="Tret nau 2" width="100"/>
