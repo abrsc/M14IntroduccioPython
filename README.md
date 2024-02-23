@@ -42,5 +42,6 @@ Benvinguts al meu repository de Python.
 ### Sprites
 #### Nau protagonista
 <img src="NavetteSpaciale.png" alt="Nau protagonista" width="100"/>
-#### Tret nau protagonista
+
+##### Tret nau protagonista
 <img src="tretnau.png" alt="Tret nau" width="100"/>
