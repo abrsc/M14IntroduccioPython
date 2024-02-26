@@ -41,4 +41,12 @@ Benvinguts al meu repository de Python.
 ## Projecte pygame
 ### Sprites
 #### Nau protagonista
-<img src="NavetteSpaciale.png" alt="Nau Protagonista" width="100"/>
+<img src="NavetteSpaciale.png" alt="Nau protagonista" width="100"/>
+
+##### Trets nau protagonista
+<table>
+  <tr>
+<td><img src="tretnau.png" alt="Tret nau" width="100"/></td>
+<td><img src="tretnau2.png" alt="Tret nau 2" width="100"/></td>
+    </tr>
+</table>
