@@ -1,6 +1,7 @@
 pos_x = 0
 pos_y = 0
 AMPLADA = 20
+ALTURA = 6
 cadena_buida = "|" + " " * AMPLADA + "|"
 cadena_vora = "-" * (AMPLADA+2)
 while True:
@@ -14,7 +15,7 @@ while True:
     cadena_asterisc += "|"
     #imprimerixo l'asterisc:
     print(cadena_vora)
-    for e in range(AMPLADA+1):
+    for e in range(ALTURA+1):
         if pos_y == e:
             print(cadena_asterisc)
         else:
