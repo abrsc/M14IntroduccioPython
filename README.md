@@ -50,3 +50,7 @@ Benvinguts al meu repository de Python.
 <td><img src="tretnau2.png" alt="Tret nau 2" width="100"/></td>
     </tr>
 </table>
+
+#### Backgrounds
+##### Fón de titol
+![Imatge de titol](titol.png)
