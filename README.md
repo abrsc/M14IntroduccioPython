@@ -52,5 +52,5 @@ Benvinguts al meu repository de Python.
 </table>
 
 #### Backgrounds
-##### Fón de titol
+##### Pantalla de titol
 ![Imatge de titol](vaseleyo.png)
