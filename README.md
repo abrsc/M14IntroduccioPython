@@ -53,4 +53,4 @@ Benvinguts al meu repository de Python.
 
 #### Backgrounds
 ##### Fón de titol
-![Imatge de titol](titol2.0.png)
+![Imatge de titol](vaseleyo.png)
