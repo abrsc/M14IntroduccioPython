@@ -41,7 +41,7 @@ Benvinguts al meu repository de Python.
 ## Projecte pygame
 ### Sprites
 #### Nau protagonista
-<img src="NavetteSpaciale.png" alt="Nau protagonista" width="100"/>
+<img src="Nau.png" alt="Nau protagonista" width="100"/>
 
 ##### Trets nau protagonista
 <table>
@@ -53,4 +53,4 @@ Benvinguts al meu repository de Python.
 
 #### Backgrounds
 ##### Pantalla de titol
-![Imatge de titol](vaseleyo.png)
+![Imatge de titol](TitleScreen.png)
