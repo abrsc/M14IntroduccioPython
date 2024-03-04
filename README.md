@@ -41,16 +41,16 @@ Benvinguts al meu repository de Python.
 ## Projecte pygame
 ### Sprites
 #### Nau protagonista
-<img src="Nau.png" alt="Nau protagonista" width="100"/>
+<img src="Pygame/Assets/Nau.png" alt="Nau protagonista" width="100"/>
 
 ##### Trets nau protagonista
 <table>
   <tr>
-<td><img src="tretnau.png" alt="Tret nau" width="100"/></td>
-<td><img src="tretnau2.png" alt="Tret nau 2" width="100"/></td>
+<td><img src="Pygame/Assets/tretnau.png" alt="Tret nau" width="100"/></td>
+<td><img src="Pygame/Assets/tretnau2.png" alt="Tret nau 2" width="100"/></td>
     </tr>
 </table>
 
 #### Backgrounds
 ##### Pantalla de titol
-![Imatge de titol](TitleScreen.png)
+![Imatge de titol](Pygame/Assets/TitleScreen.png)
