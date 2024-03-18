@@ -5,6 +5,9 @@ ALTURA = 200
 BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
 
 pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load('Assets/Holanda.mp3')
+pygame.mixer.music.play()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Arcade")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
@@ -19,8 +22,6 @@ img = font.render("1.- Crèdits", True, (255,255,255))
 img2 = font.render("2.- Jugar", True, (255,255,255))
 img3= font.render("3.- Sortir", True, (255,255,255))
 
-pygame.mixer.music.load('Assets/Holanda.mp3')
-pygame.mixer.music.play()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -34,5 +35,6 @@ while True:
     pantalla.blit(img, (50, 80))
     pantalla.blit(img2, (50, 100))
     pantalla.blit(img3, (50, 120))
+    pass
 
     pygame.display.update()
