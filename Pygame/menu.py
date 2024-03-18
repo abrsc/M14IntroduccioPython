@@ -1,4 +1,4 @@
-import pygame
+import pygame, time
 
 AMPLADA = 320
 ALTURA = 200
@@ -19,6 +19,8 @@ img = font.render("1.- Crèdits", True, (255,255,255))
 img2 = font.render("2.- Jugar", True, (255,255,255))
 img3= font.render("3.- Sortir", True, (255,255,255))
 
+pygame.mixer.music.load('Assets/Holanda.mp3')
+pygame.mixer.music.play()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
