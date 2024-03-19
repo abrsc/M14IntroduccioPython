@@ -14,6 +14,7 @@ Benvinguts al meu repository de Python.
 - [PyCalc (Calculadora interactiva)](pycalc.py)
 - [Definicions i aleatori](daus.py)
 - [Joc amb les definicions](joc.py)
+- [Cara pygame](Pygame/Practica/cara.py)
 ### Bateria de programes
 #### Bateria 1 - variables
 - [Bateria 1.1](bateria%201-1.py)
