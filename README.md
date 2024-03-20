@@ -35,6 +35,9 @@ Benvinguts al meu repository de Python.
 - [Bateria 3.4](bateria3-4.py)
 - [Bateria 3.5]()
 
+#### Bateria 4 - for
+- [Bateria 4.1](bateria4-1.py)
+
 #### Bateria 5 - Llistes (arrays)
 - [Bateria 5.1](bateria5-1.py)
 - [Bateria 5.2](bateria5-2.py)
