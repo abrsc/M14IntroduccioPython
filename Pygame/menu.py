@@ -22,14 +22,33 @@ def TextPantalla(pantalla, font, tamany, text, color, posicio):
     img = font.render(text, True, color)
     pantalla.blit(img, posicio)
 
+def animacioinici():
+    color = 0
+    for i in range(0,255):
+        time.sleep(0.01)
+        if i < 255:
+            color += 3
+            if color > 255:
+                color = 255
+        if i < 70:
+            time.sleep(0.01)
+            pantalla.fill((0,0,0))
+            TextPantalla(pantalla,None,80, "Vaseleyo", (color,0,0), (40,i))
+        pygame.display.update()
+            
+
 def menuprincipal():
+    # Imprimeixo imatge de fons:
     pantalla.blit(background, (0,0))
     pygame.draw.rect(seccio_transparent,(0,0,0,100),(0,35,140,68))
+    # DIBUIXAR LA SUPERFÍCIE TRANSPARENT A LA FINESTRA
     pantalla.blit(seccio_transparent, (40, 40))
+    # Dibuixem el text
     TextPantalla(pantalla, None, 24, "1.- Crèdits", WHITE, (50,80))
     TextPantalla(pantalla, None, 24, "2.- Jugar", WHITE,(50,100))
     TextPantalla(pantalla,None, 24, "3.- Sortir", WHITE, (50,120))
 
+animacioinici()
 menuprincipal()
 
 while True:
@@ -37,8 +56,5 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
 
-    # Imprimeixo imatge de fons:
-    # DIBUIXAR LA SUPERFÍCIE TRANSPARENT A LA FINESTRA
-    # dibuixem el text
     pygame.display.update()
 
