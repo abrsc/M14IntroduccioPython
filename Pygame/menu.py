@@ -48,13 +48,8 @@ def menuprincipal():
     TextPantalla(pantalla, None, 24, "2.- Jugar", WHITE,(50,100))
     TextPantalla(pantalla,None, 24, "3.- Sortir", WHITE, (50,120))
 
-animacioinici()
-menuprincipal()
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-
-    pygame.display.update()
 
