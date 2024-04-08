@@ -225,6 +225,8 @@ while running:
                     pantalla.fill((0,0,0))
                     TextPantalla(pantalla,None,60, "Player 2 wins", (255,0,0), (27,70))
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
+                    TextPantalla(pantalla,None,10,f"Precisió jugador 1: {resultat_precisio_jugador1:.2f}%", WHITE, (0,170))
+                    TextPantalla(pantalla,None,10,f"Precisió jugador 2: {resultat_precisio_jugador2:.2f}%", WHITE, (0,185))
                 if videsjugador2 == 0:
                     if animacio == True:
                         sprite_player2 = 'assets/explosió.png'
@@ -244,6 +246,8 @@ while running:
                     pantalla.fill((0,0,0))
                     TextPantalla(pantalla,None,60, "Player 1 wins", (255,0,0), (27,70))
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
+                    TextPantalla(pantalla,None,17,f"Precisió jugador 1: {resultat_precisio_jugador1:.2f}%", WHITE, (0,170))
+                    TextPantalla(pantalla,None,17,f"Precisió jugador 2: {resultat_precisio_jugador2:.2f}%", WHITE, (0,185))
                 pygame.display.update()
             
             BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
