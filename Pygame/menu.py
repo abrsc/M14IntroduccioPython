@@ -97,6 +97,8 @@ while running:
 
     if partida == True:
        BACKGROUND_IMAGE = 'Assets/fondo.png'
+       videsjugador1 = 3
+       videsjugador2 = 3
        while True:
     #contador
         current_time = pygame.time.get_ticks()
@@ -145,7 +147,8 @@ while running:
                 pantalla.blit(bala_imatge, bala) # si no ha sortit la dibuixa
             # Detectar col·lisions jugador 2:
             if player_rect2.colliderect(bala):  # si una bala toca al jugador1 (el seu rectangle)
-                print("BOOM 1!")
+                videsjugador2 -= 1
+                print("Queda", videsjugador2, "vides al jugador 2!")
                 bales_jugador1.remove(bala)  # eliminem la bala
                 # mostrem una explosió
                 # eliminem el jugador 1 (un temps)
@@ -160,11 +163,36 @@ while running:
                 pantalla.blit(bala_imatge, bala)
             # Detectar col·lisions jugador 1:
             if player_rect.colliderect(bala):  # si una bala toca al jugador1 (el seu rectangle)
-                print("BOOM 2!")
+                videsjugador1 -= 1
+                print("Queda", videsjugador1, "vides al jugador 1!")
                 bales_jugador2.remove(bala)  # eliminem la bala
                 # mostrem una explosió
                 # eliminem el jugador 1 (un temps)
                 # anotem punts al jugador 1
+        if videsjugador1 == 0 or videsjugador2 == 0:
+            score = True
+            while score:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                    if event.type == KEYDOWN:
+                        if event.key == K_SPACE:
+                            score = False
+                pantalla.fill((0,0,0))
+                if videsjugador1 == 0:
+                    TextPantalla(pantalla,None,60, "Player 2 wins", (255,0,0), (20,80))
+                    TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
+                if videsjugador2 == 0:
+                    TextPantalla(pantalla,None,60, "Player 1 wins", (255,0,0), (20,80))
+                    TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
+                pygame.display.update()
+            BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
+            partida = False
+            menuprincipal()
+            break
+    
+
+
 
         #dibuixar els jugadors:
         pantalla.blit(player_image, player_rect)
