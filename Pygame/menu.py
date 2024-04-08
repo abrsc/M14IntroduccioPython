@@ -10,12 +10,14 @@ running = True
 partida = False
 
 # Jugador 1:
-player_image = pygame.image.load('assets/Nau.png')
+sprite_player1 = 'assets/Nau.png'
+player_image = pygame.image.load(sprite_player1)
 player_rect = player_image.get_rect(midbottom=(AMPLADA // 2, ALTURA - 10))
 velocitat_nau = 2
 
 # Jugador 2:
-player_image2 = pygame.image.load('assets/Nau2.png')
+sprite_player2 = 'assets/Nau2.png'
+player_image2 = pygame.image.load(sprite_player2)
 player_rect2 = player_image2.get_rect(midbottom=(AMPLADA // 2, ALTURA - 150))
 velocitat_nau2 = 2
 
@@ -26,8 +28,11 @@ bales_jugador1 = [] #llista on guardem les bales del jugador 1
 bales_jugador2 = [] #llista on guardem les bales del jugador 2
 velocitat_bales = 3
 temps_entre_bales = 1000 #1 segon
+temps_invicibilitat = 2000 #2 segon
 temps_ultima_bala_jugador1 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 1
 temps_ultima_bala_jugador2 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 2
+temps_ultim_golp_jugador1 = 0
+temps_ultim_golp_jugador2 = 0
 
 pygame.init()
 #pygame.mixer.init()
@@ -99,6 +104,10 @@ while running:
        BACKGROUND_IMAGE = 'Assets/fondo.png'
        videsjugador1 = 3
        videsjugador2 = 3
+       bales_total_utilitzades_jugador1 = 0
+       bales_total_utilitzades_jugador2 = 0
+       accuracy_jugador1 = 0
+       accuracy_jugador2 = 0
        while True:
     #contador
         current_time = pygame.time.get_ticks()
@@ -142,13 +151,18 @@ while running:
         for bala in bales_jugador1: # bucle que recorre totes les bales
             bala.y -= velocitat_bales # mou la bala
             if bala.bottom < 0 or bala.top > ALTURA: # comprova que no ha sortit de la pantalla
+                bales_total_utilitzades_jugador1 += 1
                 bales_jugador1.remove(bala) # si ha sortit elimina la bala
             else:
                 pantalla.blit(bala_imatge, bala) # si no ha sortit la dibuixa
             # Detectar col·lisions jugador 2:
             if player_rect2.colliderect(bala):  # si una bala toca al jugador1 (el seu rectangle)
-                videsjugador2 -= 1
-                print("Queda", videsjugador2, "vides al jugador 2!")
+                if current_time - temps_ultim_golp_jugador2 >= temps_invicibilitat:
+                    videsjugador2 -= 1
+                    bales_total_utilitzades_jugador1 += 1
+                    accuracy_jugador1 += 1
+                    print("Queda", videsjugador2, "vides al jugador 2!")
+                    temps_ultim_golp_jugador2 = current_time
                 bales_jugador1.remove(bala)  # eliminem la bala
                 # mostrem una explosió
                 # eliminem el jugador 1 (un temps)
@@ -158,19 +172,33 @@ while running:
         for bala in bales_jugador2:
             bala.y += velocitat_bales
             if bala.bottom < 0 or bala.top > ALTURA:
+                bales_total_utilitzades_jugador2 += 1
                 bales_jugador2.remove(bala)
             else:
                 pantalla.blit(bala_imatge, bala)
             # Detectar col·lisions jugador 1:
             if player_rect.colliderect(bala):  # si una bala toca al jugador1 (el seu rectangle)
-                videsjugador1 -= 1
-                print("Queda", videsjugador1, "vides al jugador 1!")
+                if current_time - temps_ultim_golp_jugador1 >= temps_invicibilitat:
+                    videsjugador1 -= 1
+                    bales_total_utilitzades_jugador2 += 1
+                    accuracy_jugador2 += 1
+                    print("Queda", videsjugador1, "vides al jugador 1!")
+                    temps_ultim_golp_jugador1 = current_time
                 bales_jugador2.remove(bala)  # eliminem la bala
                 # mostrem una explosió
                 # eliminem el jugador 1 (un temps)
                 # anotem punts al jugador 1
         if videsjugador1 == 0 or videsjugador2 == 0:
             score = True
+            animacio = True
+            try:
+                resultat_precisio_jugador1 = (accuracy_jugador1/bales_total_utilitzades_jugador1)*100
+            except:
+                resultat_precisio_jugador1 = 0
+            try:
+                resultat_precisio_jugador2 = (accuracy_jugador2/bales_total_utilitzades_jugador2)*100
+            except:
+                resultat_precisio_jugador2 = 0
             while score:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -178,26 +206,60 @@ while running:
                     if event.type == KEYDOWN:
                         if event.key == K_SPACE:
                             score = False
-                pantalla.fill((0,0,0))
                 if videsjugador1 == 0:
-                    TextPantalla(pantalla,None,60, "Player 2 wins", (255,0,0), (20,80))
+                    if animacio == True:
+                        sprite_player1 = 'assets/explosió.png'
+                        player_image = pygame.image.load(sprite_player1)
+                        BACKGROUND_IMAGE = 'Assets/fondo.png'
+                        background = pygame.image.load(BACKGROUND_IMAGE).convert()
+                        pantalla.blit(background, (0, 0))
+                        pantalla.blit(player_image, player_rect)
+                        pantalla.blit(player_image2, player_rect2)
+                        pygame.display.update()
+                        time.sleep(2)
+                        pantalla.blit(background, (0, 0))
+                        pantalla.blit(player_image2, player_rect2)
+                        pygame.display.update()
+                        time.sleep(1)
+                        animacio = False
+                    pantalla.fill((0,0,0))
+                    TextPantalla(pantalla,None,60, "Player 2 wins", (255,0,0), (27,70))
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
                 if videsjugador2 == 0:
-                    TextPantalla(pantalla,None,60, "Player 1 wins", (255,0,0), (20,80))
+                    if animacio == True:
+                        sprite_player2 = 'assets/explosió.png'
+                        player_image2 = pygame.image.load(sprite_player2)
+                        BACKGROUND_IMAGE = 'Assets/fondo.png'
+                        background = pygame.image.load(BACKGROUND_IMAGE).convert()
+                        pantalla.blit(background, (0, 0))
+                        pantalla.blit(player_image, player_rect)
+                        pantalla.blit(player_image2, player_rect2)
+                        pygame.display.update()
+                        time.sleep(2)
+                        pantalla.blit(background, (0, 0))
+                        pantalla.blit(player_image, player_rect)
+                        pygame.display.update()
+                        time.sleep(1)
+                        animacio = False
+                    pantalla.fill((0,0,0))
+                    TextPantalla(pantalla,None,60, "Player 1 wins", (255,0,0), (27,70))
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
                 pygame.display.update()
+            
             BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
+            background = pygame.image.load(BACKGROUND_IMAGE).convert()
             partida = False
+            sprite_player1 = 'assets/Nau.png'
+            sprite_player2 = 'assets/Nau2.png'
+            player_image = pygame.image.load(sprite_player1)
+            player_image2 = pygame.image.load(sprite_player2)
             menuprincipal()
             break
     
 
-
-
         #dibuixar els jugadors:
         pantalla.blit(player_image, player_rect)
         pantalla.blit(player_image2, player_rect2)
-
         pygame.display.update()
         clock.tick(fps)
 
