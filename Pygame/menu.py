@@ -12,14 +12,17 @@ partida = False
 # Jugador 1:
 sprite_player1 = 'assets/Nau.png'
 player_image = pygame.image.load(sprite_player1)
-player_rect = player_image.get_rect(midbottom=(AMPLADA // 2, ALTURA - 10))
+player_rect = player_image.get_rect(midbottom=(AMPLADA // 2, ALTURA - 15))
 velocitat_nau = 2
 
 # Jugador 2:
 sprite_player2 = 'assets/Nau2.png'
 player_image2 = pygame.image.load(sprite_player2)
-player_rect2 = player_image2.get_rect(midbottom=(AMPLADA // 2, ALTURA - 150))
+player_rect2 = player_image2.get_rect(midbottom=(AMPLADA // 2, ALTURA - 155))
 velocitat_nau2 = 2
+
+sprite_vides = 'assets/cor1.0.png'
+vides_image = pygame.image.load(sprite_vides)
 
 # Bala rectangular blanca:
 bala_imatge = pygame.Surface((4,10)) #definim una superficie rectangle de 4 pixels d'ample i 10 d'alçada
@@ -60,20 +63,29 @@ def TextPantalla(pantalla, font, tamany, text, color, posicio):
     img = font.render(text, True, color)
     pantalla.blit(img, posicio)
 
-def animacioinici():
-    color = 0
-    for i in range(0,255):
-        time.sleep(0.01)
-        if i < 255:
-            color += 3
-            if color > 255:
-                color = 255
-        if i < 70:
-            time.sleep(0.01)
-            pantalla.fill((0,0,0))
-            TextPantalla(pantalla,None,80, "Vaseleyo", (color,0,0), (40,i))
+def credits():
+    animaciocreditacabat = False
+    credits = True
+    while credits == True:
+        if animaciocreditacabat == False:
+            for i in range(0,60):
+                time.sleep(0.02)
+                pantalla.fill((0,0,0))
+                TextPantalla(pantalla,None,25, "Programa: Arno B., Xavi Sancho", (WHITE), (20,i))
+                TextPantalla(pantalla,None,25, "Gràfics: Arno B., Kristopher G.", (WHITE), (20,i+20))
+                TextPantalla(pantalla,None,25, "Música: -", (WHITE), (20,i+38))
+                TextPantalla(pantalla,None,25, "Efectes de so: -", (WHITE), (20,i+56))
+                pygame.display.update()
+            TextPantalla(pantalla,None,17, "Premeu la barra espaiadora per continuar..", (WHITE), (40,180))
+            animaciocreditacabat = True
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                if event.type == KEYDOWN:
+                    if event.key == K_SPACE:
+                        credits = False
+                        menuprincipal()
         pygame.display.update()
-            
 
 def menuprincipal():
     # Imprimeixo imatge de fons:
@@ -87,7 +99,6 @@ def menuprincipal():
     TextPantalla(pantalla,None, 24, "3.- Sortir", WHITE, (50,120))
     pygame.display.update()
 
-#animacioinici()
 menuprincipal()
 while running:
 
@@ -95,6 +106,8 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
         if event.type == KEYDOWN:
+            if event.key == K_1:
+                credits()
             if event.key == K_2:
                 partida = True
             if event.key == K_3:
@@ -106,8 +119,8 @@ while running:
        videsjugador2 = 3
        bales_total_utilitzades_jugador1 = 0
        bales_total_utilitzades_jugador2 = 0
-       accuracy_jugador1 = 0
-       accuracy_jugador2 = 0
+       precisio_jugador1 = 0
+       precisio_jugador2 = 0
        while True:
     #contador
         current_time = pygame.time.get_ticks()
@@ -160,7 +173,7 @@ while running:
                 if current_time - temps_ultim_golp_jugador2 >= temps_invicibilitat:
                     videsjugador2 -= 1
                     bales_total_utilitzades_jugador1 += 1
-                    accuracy_jugador1 += 1
+                    precisio_jugador1 += 1
                     print("Queda", videsjugador2, "vides al jugador 2!")
                     temps_ultim_golp_jugador2 = current_time
                 bales_jugador1.remove(bala)  # eliminem la bala
@@ -181,22 +194,42 @@ while running:
                 if current_time - temps_ultim_golp_jugador1 >= temps_invicibilitat:
                     videsjugador1 -= 1
                     bales_total_utilitzades_jugador2 += 1
-                    accuracy_jugador2 += 1
+                    precisio_jugador2 += 1
                     print("Queda", videsjugador1, "vides al jugador 1!")
                     temps_ultim_golp_jugador1 = current_time
                 bales_jugador2.remove(bala)  # eliminem la bala
                 # mostrem una explosió
                 # eliminem el jugador 1 (un temps)
                 # anotem punts al jugador 1
+        if videsjugador1 > 2:
+            pantalla.blit(vides_image, (304,184))
+            pantalla.blit(vides_image, (304-16,184))
+            pantalla.blit(vides_image, (304-32,184))
+        elif videsjugador1 > 1:
+            pantalla.blit(vides_image, (304,184))
+            pantalla.blit(vides_image, (304-16,184))
+        elif videsjugador1 > 0:
+            pantalla.blit(vides_image, (304,184))
+
+        if videsjugador2 > 2:
+            pantalla.blit(vides_image, (0,0))
+            pantalla.blit(vides_image, (16,0))
+            pantalla.blit(vides_image, (32,0))
+        elif videsjugador2 > 1:
+            pantalla.blit(vides_image, (0,0))
+            pantalla.blit(vides_image, (16,0))
+        elif videsjugador2 > 0:
+            pantalla.blit(vides_image, (0,0))
+
         if videsjugador1 == 0 or videsjugador2 == 0:
             score = True
             animacio = True
             try:
-                resultat_precisio_jugador1 = (accuracy_jugador1/bales_total_utilitzades_jugador1)*100
+                resultat_precisio_jugador1 = (precisio_jugador1/bales_total_utilitzades_jugador1)*100
             except:
                 resultat_precisio_jugador1 = 0
             try:
-                resultat_precisio_jugador2 = (accuracy_jugador2/bales_total_utilitzades_jugador2)*100
+                resultat_precisio_jugador2 = (precisio_jugador2/bales_total_utilitzades_jugador2)*100
             except:
                 resultat_precisio_jugador2 = 0
             while score:
@@ -225,8 +258,8 @@ while running:
                     pantalla.fill((0,0,0))
                     TextPantalla(pantalla,None,60, "Player 2 wins", (255,0,0), (27,70))
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
-                    TextPantalla(pantalla,None,10,f"Precisió jugador 1: {resultat_precisio_jugador1:.2f}%", WHITE, (0,170))
-                    TextPantalla(pantalla,None,10,f"Precisió jugador 2: {resultat_precisio_jugador2:.2f}%", WHITE, (0,185))
+                    TextPantalla(pantalla,None,17,f"Precisió jugador 1: {resultat_precisio_jugador1:.2f}%", WHITE, (0,170))
+                    TextPantalla(pantalla,None,17,f"Precisió jugador 2: {resultat_precisio_jugador2:.2f}%", WHITE, (0,185))
                 if videsjugador2 == 0:
                     if animacio == True:
                         sprite_player2 = 'assets/explosió.png'
