@@ -225,11 +225,11 @@ while running:
             score = True
             animacio = True
             try:
-                resultat_precisio_jugador1 = (precisio_jugador1/bales_total_utilitzades_jugador1)*100
+                resultat_precisio_jugador1 = int((precisio_jugador1/bales_total_utilitzades_jugador1)*100)
             except:
                 resultat_precisio_jugador1 = 0
             try:
-                resultat_precisio_jugador2 = (precisio_jugador2/bales_total_utilitzades_jugador2)*100
+                resultat_precisio_jugador2 = int((precisio_jugador2/bales_total_utilitzades_jugador2)*100)
             except:
                 resultat_precisio_jugador2 = 0
             while score:
@@ -258,8 +258,8 @@ while running:
                     pantalla.fill((0,0,0))
                     TextPantalla(pantalla,None,60, "Player 2 wins", (255,0,0), (27,70))
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
-                    TextPantalla(pantalla,None,17,f"Precisió jugador 1: {resultat_precisio_jugador1:.2f}%", WHITE, (0,170))
-                    TextPantalla(pantalla,None,17,f"Precisió jugador 2: {resultat_precisio_jugador2:.2f}%", WHITE, (0,185))
+                    TextPantalla(pantalla,None,17,"Precisió jugador 1: "+ str(resultat_precisio_jugador1) + "%", WHITE, (0,170))
+                    TextPantalla(pantalla,None,17,"Precisió jugador 2: "+ str(resultat_precisio_jugador2) + "%", WHITE, (0,185))
                 if videsjugador2 == 0:
                     if animacio == True:
                         sprite_player2 = 'assets/explosió.png'
@@ -279,8 +279,8 @@ while running:
                     pantalla.fill((0,0,0))
                     TextPantalla(pantalla,None,60, "Player 1 wins", (255,0,0), (27,70))
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
-                    TextPantalla(pantalla,None,17,f"Precisió jugador 1: {resultat_precisio_jugador1:.2f}%", WHITE, (0,170))
-                    TextPantalla(pantalla,None,17,f"Precisió jugador 2: {resultat_precisio_jugador2:.2f}%", WHITE, (0,185))
+                    TextPantalla(pantalla,None,17,"Precisió jugador 1: "+ str(resultat_precisio_jugador1) + "%", WHITE, (0,170))
+                    TextPantalla(pantalla,None,17,"Precisió jugador 2: "+ str(resultat_precisio_jugador2) + "%", WHITE, (0,185))
                 pygame.display.update()
             
             BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
