@@ -365,7 +365,7 @@ while running:
                 bales_jugador1.remove(bala)
                 bales_jugador2.remove(bala)
             except:
-                print("")
+                continue
             menuprincipal()
             break
     
