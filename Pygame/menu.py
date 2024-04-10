@@ -9,18 +9,6 @@ WHITE = (255,255,255)
 running = True
 partida = False
 
-# Jugador 1:
-sprite_player1 = 'assets/Nau.png'
-player_image = pygame.image.load(sprite_player1)
-player_rect = player_image.get_rect(midbottom=(AMPLADA // 2, ALTURA - 15))
-velocitat_nau = 2
-
-# Jugador 2:
-sprite_player2 = 'assets/Nau2.png'
-player_image2 = pygame.image.load(sprite_player2)
-player_rect2 = player_image2.get_rect(midbottom=(AMPLADA // 2, ALTURA - 155))
-velocitat_nau2 = 2
-
 sprite_vides = 'assets/cor1.0.png'
 vides_image = pygame.image.load(sprite_vides)
 
@@ -29,9 +17,9 @@ bala_imatge = pygame.Surface((4,10)) #definim una superficie rectangle de 4 pixe
 bala_imatge.fill(WHITE) #pintem la superficie de color blanc
 bales_jugador1 = [] #llista on guardem les bales del jugador 1
 bales_jugador2 = [] #llista on guardem les bales del jugador 2
-velocitat_bales = 3
+velocitat_bales = 4.5
 temps_entre_bales = 1000 #1 segon
-temps_invicibilitat = 2000 #2 segon
+temps_invicibilitat = 3000 #2 segon
 temps_ultima_bala_jugador1 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 1
 temps_ultima_bala_jugador2 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 2
 temps_ultim_golp_jugador1 = 0
@@ -121,6 +109,17 @@ while running:
        bales_total_utilitzades_jugador2 = 0
        precisio_jugador1 = 0
        precisio_jugador2 = 0
+       # Jugador 1:
+       sprite_player1 = 'assets/Nau.png'
+       player_image = pygame.image.load(sprite_player1)
+       player_rect = player_image.get_rect(midbottom=(AMPLADA // 2, ALTURA - 15))
+       velocitat_nau = 2
+
+       # Jugador 2:
+       sprite_player2 = 'assets/Nau2.png'
+       player_image2 = pygame.image.load(sprite_player2)
+       player_rect2 = player_image2.get_rect(midbottom=(AMPLADA // 2, ALTURA - 155))
+       velocitat_nau2 = 2
        while True:
     #contador
         current_time = pygame.time.get_ticks()
@@ -175,6 +174,42 @@ while running:
                     bales_total_utilitzades_jugador1 += 1
                     precisio_jugador1 += 1
                     print("Queda", videsjugador2, "vides al jugador 2!")
+                    sprite_player2 = 'assets/explosió.png'
+                    player_image2 = pygame.image.load(sprite_player2)
+                    BACKGROUND_IMAGE = 'Assets/fondo.png'
+                    background = pygame.image.load(BACKGROUND_IMAGE).convert()
+                    pantalla.blit(background, (0, 0))
+                    pantalla.blit(player_image, player_rect)
+                    pantalla.blit(player_image2, player_rect2)
+                    if videsjugador1 > 2:
+                        pantalla.blit(vides_image, (304,184))
+                        pantalla.blit(vides_image, (304-16,184))
+                        pantalla.blit(vides_image, (304-32,184))
+                    elif videsjugador1 > 1:
+                        pantalla.blit(vides_image, (304,184))
+                        pantalla.blit(vides_image, (304-16,184))
+                    elif videsjugador1 > 0:
+                        pantalla.blit(vides_image, (304,184))
+
+                    if videsjugador2 > 2:
+                        pantalla.blit(vides_image, (0,0))
+                        pantalla.blit(vides_image, (16,0))
+                        pantalla.blit(vides_image, (32,0))
+                    elif videsjugador2 > 1:
+                        pantalla.blit(vides_image, (0,0))
+                        pantalla.blit(vides_image, (16,0))
+                    elif videsjugador2 > 0:
+                        pantalla.blit(vides_image, (0,0))
+                    pygame.display.update()
+                    temps_ultima_bala_jugador1 += 1000
+                    temps_ultima_bala_jugador2 +=1000
+                    time.sleep(1)
+                    sprite_player2 = 'assets/Nau2.png'
+                    player_image2 = pygame.image.load(sprite_player2)
+                    pantalla.blit(background, (0, 0))
+                    pantalla.blit(player_image, player_rect)
+                    pantalla.blit(player_image2, player_rect2)
+                    pygame.display.update()
                     temps_ultim_golp_jugador2 = current_time
                 bales_jugador1.remove(bala)  # eliminem la bala
                 # mostrem una explosió
@@ -196,6 +231,42 @@ while running:
                     bales_total_utilitzades_jugador2 += 1
                     precisio_jugador2 += 1
                     print("Queda", videsjugador1, "vides al jugador 1!")
+                    sprite_player1 = 'assets/explosió.png'
+                    player_image = pygame.image.load(sprite_player1)
+                    BACKGROUND_IMAGE = 'Assets/fondo.png'
+                    background = pygame.image.load(BACKGROUND_IMAGE).convert()
+                    pantalla.blit(background, (0, 0))
+                    pantalla.blit(player_image, player_rect)
+                    pantalla.blit(player_image2, player_rect2)
+                    if videsjugador1 > 2:
+                        pantalla.blit(vides_image, (304,184))
+                        pantalla.blit(vides_image, (304-16,184))
+                        pantalla.blit(vides_image, (304-32,184))
+                    elif videsjugador1 > 1:
+                        pantalla.blit(vides_image, (304,184))
+                        pantalla.blit(vides_image, (304-16,184))
+                    elif videsjugador1 > 0:
+                        pantalla.blit(vides_image, (304,184))
+
+                    if videsjugador2 > 2:
+                        pantalla.blit(vides_image, (0,0))
+                        pantalla.blit(vides_image, (16,0))
+                        pantalla.blit(vides_image, (32,0))
+                    elif videsjugador2 > 1:
+                        pantalla.blit(vides_image, (0,0))
+                        pantalla.blit(vides_image, (16,0))
+                    elif videsjugador2 > 0:
+                        pantalla.blit(vides_image, (0,0))
+                    pygame.display.update()
+                    temps_ultima_bala_jugador1 += 1000
+                    temps_ultima_bala_jugador2 +=1000
+                    time.sleep(1)
+                    sprite_player1 = 'assets/Nau.png'
+                    player_image = pygame.image.load(sprite_player1)
+                    pantalla.blit(background, (0, 0))
+                    pantalla.blit(player_image, player_rect)
+                    pantalla.blit(player_image2, player_rect2)
+                    pygame.display.update()
                     temps_ultim_golp_jugador1 = current_time
                 bales_jugador2.remove(bala)  # eliminem la bala
                 # mostrem una explosió
@@ -290,6 +361,11 @@ while running:
             sprite_player2 = 'assets/Nau2.png'
             player_image = pygame.image.load(sprite_player1)
             player_image2 = pygame.image.load(sprite_player2)
+            try:
+                bales_jugador1.remove(bala)
+                bales_jugador2.remove(bala)
+            except:
+                print("")
             menuprincipal()
             break
     
