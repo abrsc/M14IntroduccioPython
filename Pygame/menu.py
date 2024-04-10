@@ -212,6 +212,12 @@ while running:
                     pygame.display.update()
                     temps_ultim_golp_jugador2 = current_time
                 bales_jugador1.remove(bala)  # eliminem la bala
+                try:
+                    for bala in bales_jugador2:
+                        bales_jugador2.remove(bala)
+                    bales_total_utilitzades_jugador2 += 1
+                except:
+                    continue
                 # mostrem una explosió
                 # eliminem el jugador 1 (un temps)
                 # anotem punts al jugador 1
@@ -269,6 +275,12 @@ while running:
                     pygame.display.update()
                     temps_ultim_golp_jugador1 = current_time
                 bales_jugador2.remove(bala)  # eliminem la bala
+                try:
+                    for bala in bales_jugador1:
+                        bales_jugador1.remove(bala)
+                    bales_total_utilitzades_jugador1 += 1
+                except:
+                    continue
                 # mostrem una explosió
                 # eliminem el jugador 1 (un temps)
                 # anotem punts al jugador 1
@@ -362,10 +374,12 @@ while running:
             player_image = pygame.image.load(sprite_player1)
             player_image2 = pygame.image.load(sprite_player2)
             try:
-                bales_jugador1.remove(bala)
-                bales_jugador2.remove(bala)
+                for bala in bales_jugador1:
+                    bales_jugador1.remove(bala)
+                for bala in bales_jugador2:
+                    bales_jugador2.remove(bala)
             except:
-                continue
+                menuprincipal()
             menuprincipal()
             break
     
