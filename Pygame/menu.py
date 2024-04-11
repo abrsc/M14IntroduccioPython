@@ -19,12 +19,13 @@ bales_jugador1 = [] #llista on guardem les bales del jugador 1
 bales_jugador2 = [] #llista on guardem les bales del jugador 2
 velocitat_bales = 4.5
 temps_entre_bales = 1000 #1 segon
-temps_invicibilitat = 3000 #2 segon
+temps_invicibilitat = 3000 #2 segon (+1 d'animacions)
 temps_ultima_bala_jugador1 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 1
 temps_ultima_bala_jugador2 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 2
 temps_ultim_golp_jugador1 = 0
 temps_ultim_golp_jugador2 = 0
 temps_pause = 0
+temps_partida = 300000 #5min
 
 pygame.init()
 #pygame.mixer.init()
@@ -102,6 +103,7 @@ while running:
                 running = False
 
     if partida == True:
+       current_time = pygame.time.get_ticks()
        BACKGROUND_IMAGE = 'Assets/fondo.png'
        pause = False
        videsjugador1 = 3
@@ -110,6 +112,8 @@ while running:
        bales_total_utilitzades_jugador2 = 0
        precisio_jugador1 = 0
        precisio_jugador2 = 0
+       temps_inici_partida = current_time
+       draw = False
        # Jugador 1:
        sprite_player1 = 'assets/Nau.png'
        player_image = pygame.image.load(sprite_player1)
@@ -286,9 +290,7 @@ while running:
                     bales_total_utilitzades_jugador1 += 1
                 except:
                     continue
-                # mostrem una explosió
-                # eliminem el jugador 1 (un temps)
-                # anotem punts al jugador 1
+
         if videsjugador1 > 2:
             pantalla.blit(vides_image, (304,184))
             pantalla.blit(vides_image, (304-16,184))
@@ -308,6 +310,14 @@ while running:
             pantalla.blit(vides_image, (16,0))
         elif videsjugador2 > 0:
             pantalla.blit(vides_image, (0,0))
+
+        timer = int((temps_partida - (current_time - temps_inici_partida))/1000)
+        if timer < 10:
+            TextPantalla(pantalla,None,20,str(timer),(WHITE), (310,5))
+        elif timer < 100:
+            TextPantalla(pantalla,None,20,str(timer),(WHITE), (300,5))
+        elif timer > 99:
+            TextPantalla(pantalla,None,20,str(timer),(WHITE), (290,5))
 
         if pause == True:
             temps_pause = 0
@@ -350,11 +360,12 @@ while running:
             temps_ultim_golp_jugador1 = current_time - temps_pause + temps_ultim_golp_jugador1
             temps_ultim_golp_jugador2 = current_time - temps_pause + temps_ultim_golp_jugador2 
             temps_ultima_bala_jugador1 = current_time - temps_pause + temps_ultima_bala_jugador1
-            temps_ultima_bala_jugador2 = current_time - temps_pause + temps_ultima_bala_jugador2 
+            temps_ultima_bala_jugador2 = current_time - temps_pause + temps_ultima_bala_jugador2
+            temps_inici_partida = current_time - temps_pause + temps_inici_partida
             pygame.display.update()
 
 
-        if videsjugador1 == 0 or videsjugador2 == 0:
+        if videsjugador1 == 0 or videsjugador2 == 0 or current_time - temps_inici_partida >= temps_partida:
             score = True
             animacio = True
             try:
@@ -365,6 +376,18 @@ while running:
                 resultat_precisio_jugador2 = int((precisio_jugador2/bales_total_utilitzades_jugador2)*100)
             except:
                 resultat_precisio_jugador2 = 0
+            if current_time - temps_inici_partida >= temps_partida:
+                if videsjugador1 > videsjugador2 and videsjugador1 != videsjugador2:
+                    videsjugador2 = 0
+                elif videsjugador2 > videsjugador1 and videsjugador2 != videsjugador1:
+                    videsjugador1 = 0
+                elif videsjugador1 == videsjugador2:
+                    if resultat_precisio_jugador1 > resultat_precisio_jugador2 and resultat_precisio_jugador1 != resultat_precisio_jugador2:
+                        videsjugador2 = 0
+                    elif resultat_precisio_jugador2 > resultat_precisio_jugador1 and resultat_precisio_jugador1 != resultat_precisio_jugador2:
+                        videsjugador1 = 0
+                    elif resultat_precisio_jugador1 == resultat_precisio_jugador2:
+                        draw = True
             while score:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -414,6 +437,28 @@ while running:
                     TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
                     TextPantalla(pantalla,None,17,"Precisió jugador 1: "+ str(resultat_precisio_jugador1) + "%", WHITE, (0,170))
                     TextPantalla(pantalla,None,17,"Precisió jugador 2: "+ str(resultat_precisio_jugador2) + "%", WHITE, (0,185))
+                if draw == True:
+                    if animacio == True:
+                        sprite_player1 = 'assets/explosió.png'
+                        player_image = pygame.image.load(sprite_player1)
+                        sprite_player2 = 'assets/explosió.png'
+                        player_image2 = pygame.image.load(sprite_player2)
+                        BACKGROUND_IMAGE = 'Assets/fondo.png'
+                        background = pygame.image.load(BACKGROUND_IMAGE).convert()
+                        pantalla.blit(background, (0, 0))
+                        pantalla.blit(player_image, player_rect)
+                        pantalla.blit(player_image2, player_rect2)
+                        pygame.display.update()
+                        time.sleep(2)
+                        pantalla.blit(background, (0, 0))
+                        pygame.display.update()
+                        time.sleep(1)
+                        animacio = False
+                    pantalla.fill((0,0,0))
+                    TextPantalla(pantalla,None,60, "It's a draw!", (255,0,0), (52,70))
+                    TextPantalla(pantalla,None,20, "Press space to continue.", (255,255,255), (80,130))
+                    TextPantalla(pantalla,None,17,"Precisió jugador 1: "+ str(resultat_precisio_jugador1) + "%", WHITE, (0,170))
+                    TextPantalla(pantalla,None,17,"Precisió jugador 2: "+ str(resultat_precisio_jugador2) + "%", WHITE, (0,185))                    
                 pygame.display.update()
             
             BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
