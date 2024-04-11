@@ -11,8 +11,11 @@ partida = False
 
 sprite_vides = 'assets/cor1.0.png'
 vides_image = pygame.image.load(sprite_vides)
-
+sprite_energia = 'assets/energia.png'
+energia_image = pygame.image.load(sprite_energia)
 # Bala rectangular blanca:
+#sprite_bala = 'assets/tretnau.png'
+#bala_imatge = pygame.image.load(sprite_bala)
 bala_imatge = pygame.Surface((4,10)) #definim una superficie rectangle de 4 pixels d'ample i 10 d'alçada
 bala_imatge.fill(WHITE) #pintem la superficie de color blanc
 bales_jugador1 = [] #llista on guardem les bales del jugador 1
@@ -24,6 +27,11 @@ temps_ultima_bala_jugador1 = 0 #per contar el temps que ha passat des de que ha 
 temps_ultima_bala_jugador2 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 2
 temps_ultim_golp_jugador1 = 0
 temps_ultim_golp_jugador2 = 0
+temps_energia = 20000 #20 segons
+temps_poder_escut = 1000 # 1 segon
+temps_poder_velocitat = 3000 # 3 segons
+temps_ultim_energia_jugador1 = 0
+temps_ultim_energia_jugador2 = 0
 temps_pause = 0
 temps_partida = 300000 #5min
 
@@ -108,6 +116,12 @@ while running:
        pause = False
        videsjugador1 = 3
        videsjugador2 = 3
+       energiajugador1 = 1
+       energiajugador2 = 1
+       invulnerabilitatjugador1 = False
+       invulnerabilitatjugador2 = False
+       boostvelocitatjugador1 = False
+       boostvelocitatjugador2 = False
        bales_total_utilitzades_jugador1 = 0
        bales_total_utilitzades_jugador2 = 0
        precisio_jugador1 = 0
@@ -138,10 +152,26 @@ while running:
                 if event.key == K_w and current_time - temps_ultima_bala_jugador1 >= temps_entre_bales:
                     bales_jugador1.append(pygame.Rect(player_rect.centerx - 2, player_rect.top, 4, 10))
                     temps_ultima_bala_jugador1 = current_time
+                if event.key == K_e and energiajugador1 > 0:
+                    invulnerabilitatjugador1 = True
+                    energiajugador1 -= 1      
+                    temps_ultim_energia_jugador1 = current_time
+                if event.key == K_r and energiajugador1 > 0:
+                    boostvelocitatjugador1 = True
+                    energiajugador1 -= 1      
+                    temps_ultim_energia_jugador1 = current_time                 
                 # jugador 2
                 if event.key == K_UP and current_time - temps_ultima_bala_jugador2 >= temps_entre_bales:
                     bales_jugador2.append(pygame.Rect(player_rect2.centerx - 2, player_rect2.bottom -10, 4, 10))
                     temps_ultima_bala_jugador2 = current_time
+                if event.key == K_KP_0 and energiajugador2 > 0:
+                    invulnerabilitatjugador2 = True
+                    energiajugador2 -= 1
+                    temps_ultim_energia_jugador2 = current_time
+                if event.key == K_RSHIFT and energiajugador1 > 0:
+                    boostvelocitatjugador2 = True
+                    energiajugador2 -= 1      
+                    temps_ultim_energia_jugador2 = current_time   
                 #Pause
                 if event.key == K_ESCAPE:
                     pause = True
@@ -170,7 +200,7 @@ while running:
 
         #Actualitzar i dibuixar les bales del jugador 1:
         for bala in bales_jugador1: # bucle que recorre totes les bales
-            bala.y -= velocitat_bales # mou la bala
+            bala.y -= velocitat_bales+0.5 # mou la bala
             if bala.bottom < 0 or bala.top > ALTURA: # comprova que no ha sortit de la pantalla
                 bales_total_utilitzades_jugador1 += 1
                 bales_jugador1.remove(bala) # si ha sortit elimina la bala
@@ -178,7 +208,7 @@ while running:
                 pantalla.blit(bala_imatge, bala) # si no ha sortit la dibuixa
             # Detectar col·lisions jugador 2:
             if player_rect2.colliderect(bala):  # si una bala toca al jugador1 (el seu rectangle)
-                if current_time - temps_ultim_golp_jugador2 >= temps_invicibilitat:
+                if current_time - temps_ultim_golp_jugador2 >= temps_invicibilitat and invulnerabilitatjugador2 == False:
                     videsjugador2 -= 1
                     bales_total_utilitzades_jugador1 += 1
                     precisio_jugador1 += 1
@@ -241,7 +271,7 @@ while running:
                 pantalla.blit(bala_imatge, bala)
             # Detectar col·lisions jugador 1:
             if player_rect.colliderect(bala):  # si una bala toca al jugador1 (el seu rectangle)
-                if current_time - temps_ultim_golp_jugador1 >= temps_invicibilitat:
+                if current_time - temps_ultim_golp_jugador1 >= temps_invicibilitat and invulnerabilitatjugador1 == False:
                     videsjugador1 -= 1
                     bales_total_utilitzades_jugador2 += 1
                     precisio_jugador2 += 1
@@ -310,6 +340,33 @@ while running:
             pantalla.blit(vides_image, (16,0))
         elif videsjugador2 > 0:
             pantalla.blit(vides_image, (0,0))
+        
+        if energiajugador1 > 0:
+            pantalla.blit(energia_image,(304-48,184))
+        if energiajugador2 > 0:
+            pantalla.blit(energia_image,(48,0))
+        
+        if energiajugador1 < 1 and current_time - temps_ultim_energia_jugador1 >= temps_energia:
+            energiajugador1 += 1
+        if energiajugador2 < 1 and current_time - temps_ultim_energia_jugador2 >= temps_energia:
+            energiajugador2 += 1
+
+        if invulnerabilitatjugador1 == True and current_time - temps_ultim_energia_jugador1 >= temps_poder_escut:
+            invulnerabilitatjugador1 = False
+        if invulnerabilitatjugador2 == True and current_time - temps_ultim_energia_jugador2 >= temps_poder_escut:
+            invulnerabilitatjugador2 = False
+
+                
+        if boostvelocitatjugador1 == True and current_time - temps_ultim_energia_jugador1 >= temps_poder_velocitat:
+            boostvelocitatjugador1 = False
+            velocitat_nau = 2
+        if boostvelocitatjugador2 == True and current_time - temps_ultim_energia_jugador2 >= temps_poder_velocitat:
+            boostvelocitatjugador2 = False
+            velocitat_nau2 = 2
+        if boostvelocitatjugador1 == True:
+            velocitat_nau = 4
+        if boostvelocitatjugador2 == True:
+            velocitat_nau2 = 4
 
         timer = int((temps_partida - (current_time - temps_inici_partida))/1000)
         if timer < 10:
@@ -361,6 +418,8 @@ while running:
             temps_ultim_golp_jugador2 = current_time - temps_pause + temps_ultim_golp_jugador2 
             temps_ultima_bala_jugador1 = current_time - temps_pause + temps_ultima_bala_jugador1
             temps_ultima_bala_jugador2 = current_time - temps_pause + temps_ultima_bala_jugador2
+            temps_ultim_energia_jugador1 = current_time - temps_pause + temps_ultim_energia_jugador1
+            temps_ultim_energia_jugador2 = current_time - temps_pause + temps_ultim_energia_jugador2
             temps_inici_partida = current_time - temps_pause + temps_inici_partida
             pygame.display.update()
 
