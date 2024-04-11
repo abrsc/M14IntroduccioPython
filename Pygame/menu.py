@@ -168,7 +168,7 @@ while running:
                     invulnerabilitatjugador2 = True
                     energiajugador2 -= 1
                     temps_ultim_energia_jugador2 = current_time
-                if event.key == K_RSHIFT and energiajugador1 > 0:
+                if event.key == K_RSHIFT and energiajugador2 > 0:
                     boostvelocitatjugador2 = True
                     energiajugador2 -= 1      
                     temps_ultim_energia_jugador2 = current_time   
