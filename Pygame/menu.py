@@ -24,6 +24,7 @@ temps_ultima_bala_jugador1 = 0 #per contar el temps que ha passat des de que ha 
 temps_ultima_bala_jugador2 = 0 #per contar el temps que ha passat des de que ha disparat el jugador 2
 temps_ultim_golp_jugador1 = 0
 temps_ultim_golp_jugador2 = 0
+temps_pause = 0
 
 pygame.init()
 #pygame.mixer.init()
@@ -33,9 +34,6 @@ pygame.init()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Vaseleyo")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
-
-# CREAR LA SUPERFÍCIE TRANSPARENT I EL RECTANGLE SOBRE ELLA:
-seccio_transparent = pygame.Surface((240,120),pygame.SRCALPHA)
 
 # Control de FPS
 clock = pygame.time.Clock()
@@ -78,6 +76,8 @@ def credits():
 def menuprincipal():
     # Imprimeixo imatge de fons:
     pantalla.blit(background, (0,0))
+    # CREAR LA SUPERFÍCIE TRANSPARENT I EL RECTANGLE SOBRE ELLA:
+    seccio_transparent = pygame.Surface((320,200),pygame.SRCALPHA)
     pygame.draw.rect(seccio_transparent,(0,0,0,100),(0,35,140,68))
     # DIBUIXAR LA SUPERFÍCIE TRANSPARENT A LA FINESTRA
     pantalla.blit(seccio_transparent, (40, 40))
@@ -103,6 +103,7 @@ while running:
 
     if partida == True:
        BACKGROUND_IMAGE = 'Assets/fondo.png'
+       pause = False
        videsjugador1 = 3
        videsjugador2 = 3
        bales_total_utilitzades_jugador1 = 0
@@ -137,6 +138,10 @@ while running:
                 if event.key == K_UP and current_time - temps_ultima_bala_jugador2 >= temps_entre_bales:
                     bales_jugador2.append(pygame.Rect(player_rect2.centerx - 2, player_rect2.bottom -10, 4, 10))
                     temps_ultima_bala_jugador2 = current_time
+                #Pause
+                if event.key == K_ESCAPE:
+                    pause = True
+
 
         # Moviment del jugador 1
         keys = pygame.key.get_pressed()
@@ -303,6 +308,51 @@ while running:
             pantalla.blit(vides_image, (16,0))
         elif videsjugador2 > 0:
             pantalla.blit(vides_image, (0,0))
+
+        if pause == True:
+            temps_pause = 0
+            temps_pause = current_time
+            seccio_transparent = pygame.Surface((320,200),pygame.SRCALPHA)
+            pygame.draw.rect(seccio_transparent,(0,0,0,150),(0,0,320,200))
+            pantalla.blit(seccio_transparent, (0, 0))
+            TextPantalla(pantalla,None,50,"PAUSE",(WHITE),(100,85))
+            pygame.display.update()
+            while pause == True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()       
+                    if event.type == KEYDOWN:      
+                        if event.key == K_ESCAPE:
+                            pause = False
+                current_time = pygame.time.get_ticks()
+            pantalla.blit(background, (0, 0))
+            pantalla.blit(player_image, player_rect)
+            pantalla.blit(player_image2, player_rect2)
+            if videsjugador1 > 2:
+                pantalla.blit(vides_image, (304,184))
+                pantalla.blit(vides_image, (304-16,184))
+                pantalla.blit(vides_image, (304-32,184))
+            elif videsjugador1 > 1:
+                pantalla.blit(vides_image, (304,184))
+                pantalla.blit(vides_image, (304-16,184))
+            elif videsjugador1 > 0:
+                pantalla.blit(vides_image, (304,184))
+
+            if videsjugador2 > 2:
+                pantalla.blit(vides_image, (0,0))
+                pantalla.blit(vides_image, (16,0))
+                pantalla.blit(vides_image, (32,0))
+            elif videsjugador2 > 1:
+                pantalla.blit(vides_image, (0,0))
+                pantalla.blit(vides_image, (16,0))
+            elif videsjugador2 > 0:
+                pantalla.blit(vides_image, (0,0))
+            temps_ultim_golp_jugador1 = current_time - temps_pause + temps_ultim_golp_jugador1
+            temps_ultim_golp_jugador2 = current_time - temps_pause + temps_ultim_golp_jugador2 
+            temps_ultima_bala_jugador1 = current_time - temps_pause + temps_ultima_bala_jugador1
+            temps_ultima_bala_jugador2 = current_time - temps_pause + temps_ultima_bala_jugador2 
+            pygame.display.update()
+
 
         if videsjugador1 == 0 or videsjugador2 == 0:
             score = True
