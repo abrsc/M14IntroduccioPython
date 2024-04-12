@@ -13,11 +13,17 @@ sprite_vides = 'assets/cor1.0.png'
 vides_image = pygame.image.load(sprite_vides)
 sprite_energia = 'assets/energia.png'
 energia_image = pygame.image.load(sprite_energia)
+sprite_escut = 'assets/escut.png'
+escut_image = pygame.image.load(sprite_escut)
+sprite_velocitat = 'assets/velocitat.png'
+velocitat_image = pygame.image.load(sprite_velocitat)
 # Bala rectangular blanca:
-#sprite_bala = 'assets/tretnau.png'
-#bala_imatge = pygame.image.load(sprite_bala)
-bala_imatge = pygame.Surface((4,10)) #definim una superficie rectangle de 4 pixels d'ample i 10 d'alçada
-bala_imatge.fill(WHITE) #pintem la superficie de color blanc
+sprite_bala = 'assets/tretnau.png'
+bala_imatge = pygame.image.load(sprite_bala)
+sprite_bala2 = 'assets/tretnau2.png'
+bala_imatge2 = pygame.image.load(sprite_bala2)
+#bala_imatge = pygame.Surface((4,10)) #definim una superficie rectangle de 4 pixels d'ample i 10 d'alçada
+#bala_imatge.fill(WHITE) #pintem la superficie de color blanc
 bales_jugador1 = [] #llista on guardem les bales del jugador 1
 bales_jugador2 = [] #llista on guardem les bales del jugador 2
 velocitat_bales = 4.5
@@ -66,10 +72,10 @@ def credits():
             for i in range(0,60):
                 time.sleep(0.02)
                 pantalla.fill((0,0,0))
-                TextPantalla(pantalla,None,25, "Programa: Arno B., Xavi Sancho", (WHITE), (20,i))
-                TextPantalla(pantalla,None,25, "Gràfics: Arno B., Kristopher G.", (WHITE), (20,i+20))
-                TextPantalla(pantalla,None,25, "Música: -", (WHITE), (20,i+38))
-                TextPantalla(pantalla,None,25, "Efectes de so: -", (WHITE), (20,i+56))
+                TextPantalla(pantalla,None,22, "Programa: Arno B., Xavi Sancho, Biel G.", (WHITE), (20,i))
+                TextPantalla(pantalla,None,22, "Gràfics: Arno B., Kristopher G.", (WHITE), (20,i+20))
+                TextPantalla(pantalla,None,22, "Música: -", (WHITE), (20,i+38))
+                TextPantalla(pantalla,None,22, "Efectes de so: -", (WHITE), (20,i+56))
                 pygame.display.update()
             TextPantalla(pantalla,None,17, "Premeu la barra espaiadora per continuar..", (WHITE), (40,180))
             animaciocreditacabat = True
@@ -150,7 +156,7 @@ while running:
             if event.type == KEYDOWN:
                 #jugador 1
                 if event.key == K_w and current_time - temps_ultima_bala_jugador1 >= temps_entre_bales:
-                    bales_jugador1.append(pygame.Rect(player_rect.centerx - 2, player_rect.top, 4, 10))
+                    bales_jugador1.append(pygame.Rect(player_rect.centerx-6, player_rect.top, 4, 10))
                     temps_ultima_bala_jugador1 = current_time
                 if event.key == K_e and energiajugador1 > 0:
                     invulnerabilitatjugador1 = True
@@ -162,7 +168,7 @@ while running:
                     temps_ultim_energia_jugador1 = current_time                 
                 # jugador 2
                 if event.key == K_UP and current_time - temps_ultima_bala_jugador2 >= temps_entre_bales:
-                    bales_jugador2.append(pygame.Rect(player_rect2.centerx - 2, player_rect2.bottom -10, 4, 10))
+                    bales_jugador2.append(pygame.Rect(player_rect2.centerx-6, player_rect2.bottom -10, 4, 10))
                     temps_ultima_bala_jugador2 = current_time
                 if event.key == K_KP_0 and energiajugador2 > 0:
                     invulnerabilitatjugador2 = True
@@ -268,7 +274,7 @@ while running:
                 bales_total_utilitzades_jugador2 += 1
                 bales_jugador2.remove(bala)
             else:
-                pantalla.blit(bala_imatge, bala)
+                pantalla.blit(bala_imatge2, bala)
             # Detectar col·lisions jugador 1:
             if player_rect.colliderect(bala):  # si una bala toca al jugador1 (el seu rectangle)
                 if current_time - temps_ultim_golp_jugador1 >= temps_invicibilitat and invulnerabilitatjugador1 == False:
@@ -351,6 +357,10 @@ while running:
         if energiajugador2 < 1 and current_time - temps_ultim_energia_jugador2 >= temps_energia:
             energiajugador2 += 1
 
+        if invulnerabilitatjugador1 == True:
+            pantalla.blit(escut_image, (304-48,184))
+        if invulnerabilitatjugador2 == True:
+            pantalla.blit(escut_image,(48,0))
         if invulnerabilitatjugador1 == True and current_time - temps_ultim_energia_jugador1 >= temps_poder_escut:
             invulnerabilitatjugador1 = False
         if invulnerabilitatjugador2 == True and current_time - temps_ultim_energia_jugador2 >= temps_poder_escut:
@@ -365,8 +375,11 @@ while running:
             velocitat_nau2 = 2
         if boostvelocitatjugador1 == True:
             velocitat_nau = 4
+            pantalla.blit(velocitat_image, (304-48,184))
+            
         if boostvelocitatjugador2 == True:
             velocitat_nau2 = 4
+            pantalla.blit(velocitat_image,(48,0))
 
         timer = int((temps_partida - (current_time - temps_inici_partida))/1000)
         if timer < 10:
