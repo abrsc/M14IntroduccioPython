@@ -9,18 +9,18 @@ WHITE = (255,255,255)
 running = True
 partida = False
 
-sprite_vides = 'Assets/cor1.0.png'
+sprite_vides = 'assets/cor1.0.png'
 vides_image = pygame.image.load(sprite_vides)
-sprite_energia = 'Assets/energia.png'
+sprite_energia = 'assets/energia.png'
 energia_image = pygame.image.load(sprite_energia)
-sprite_escut = 'Assets/escut.png'
+sprite_escut = 'assets/escut.png'
 escut_image = pygame.image.load(sprite_escut)
-sprite_velocitat = 'Assets/velocitat.png'
+sprite_velocitat = 'assets/velocitat.png'
 velocitat_image = pygame.image.load(sprite_velocitat)
 # Bala rectangular blanca:
-sprite_bala = 'Assets/tretnau.png'
+sprite_bala = 'assets/tretnau.png'
 bala_imatge = pygame.image.load(sprite_bala)
-sprite_bala2 = 'Assets/tretnau2.png'
+sprite_bala2 = 'assets/tretnau2.png'
 bala_imatge2 = pygame.image.load(sprite_bala2)
 #bala_imatge = pygame.Surface((4,10)) #definim una superficie rectangle de 4 pixels d'ample i 10 d'alçada
 #bala_imatge.fill(WHITE) #pintem la superficie de color blanc
@@ -135,13 +135,13 @@ while running:
        temps_inici_partida = current_time
        draw = False
        # Jugador 1:
-       sprite_player1 = 'Assets/Nau.png'
+       sprite_player1 = 'assets/Nau.png'
        player_image = pygame.image.load(sprite_player1)
        player_rect = player_image.get_rect(midbottom=(AMPLADA // 2, ALTURA - 15))
        velocitat_nau = 2
 
        # Jugador 2:
-       sprite_player2 = 'Assets/Nau2.png'
+       sprite_player2 = 'assets/Nau2.png'
        player_image2 = pygame.image.load(sprite_player2)
        player_rect2 = player_image2.get_rect(midbottom=(AMPLADA // 2, ALTURA - 155))
        velocitat_nau2 = 2
@@ -219,7 +219,7 @@ while running:
                     bales_total_utilitzades_jugador1 += 1
                     precisio_jugador1 += 1
                     print("Queda", videsjugador2, "vides al jugador 2!")
-                    sprite_player2 = 'Assets/explosió.png'
+                    sprite_player2 = 'assets/explosió.png'
                     player_image2 = pygame.image.load(sprite_player2)
                     BACKGROUND_IMAGE = 'Assets/fondo.png'
                     background = pygame.image.load(BACKGROUND_IMAGE).convert()
@@ -249,7 +249,7 @@ while running:
                     temps_ultima_bala_jugador1 += 1000
                     temps_ultima_bala_jugador2 +=1000
                     time.sleep(1)
-                    sprite_player2 = 'Assets/Nau2.png'
+                    sprite_player2 = 'assets/Nau2.png'
                     player_image2 = pygame.image.load(sprite_player2)
                     pantalla.blit(background, (0, 0))
                     pantalla.blit(player_image, player_rect)
@@ -282,7 +282,7 @@ while running:
                     bales_total_utilitzades_jugador2 += 1
                     precisio_jugador2 += 1
                     print("Queda", videsjugador1, "vides al jugador 1!")
-                    sprite_player1 = 'Assets/explosió.png'
+                    sprite_player1 = 'assets/explosió.png'
                     player_image = pygame.image.load(sprite_player1)
                     BACKGROUND_IMAGE = 'Assets/fondo.png'
                     background = pygame.image.load(BACKGROUND_IMAGE).convert()
@@ -312,7 +312,7 @@ while running:
                     temps_ultima_bala_jugador1 += 1000
                     temps_ultima_bala_jugador2 +=1000
                     time.sleep(1)
-                    sprite_player1 = 'Assets/Nau.png'
+                    sprite_player1 = 'assets/Nau.png'
                     player_image = pygame.image.load(sprite_player1)
                     pantalla.blit(background, (0, 0))
                     pantalla.blit(player_image, player_rect)
@@ -469,7 +469,7 @@ while running:
                             score = False
                 if videsjugador1 == 0:
                     if animacio == True:
-                        sprite_player1 = 'Assets/explosió.png'
+                        sprite_player1 = 'assets/explosió.png'
                         player_image = pygame.image.load(sprite_player1)
                         BACKGROUND_IMAGE = 'Assets/fondo.png'
                         background = pygame.image.load(BACKGROUND_IMAGE).convert()
@@ -490,7 +490,7 @@ while running:
                     TextPantalla(pantalla,None,17,"Precisió jugador 2: "+ str(resultat_precisio_jugador2) + "%", WHITE, (0,185))
                 if videsjugador2 == 0:
                     if animacio == True:
-                        sprite_player2 = 'Assets/explosió.png'
+                        sprite_player2 = 'assets/explosió.png'
                         player_image2 = pygame.image.load(sprite_player2)
                         BACKGROUND_IMAGE = 'Assets/fondo.png'
                         background = pygame.image.load(BACKGROUND_IMAGE).convert()
@@ -511,9 +511,9 @@ while running:
                     TextPantalla(pantalla,None,17,"Precisió jugador 2: "+ str(resultat_precisio_jugador2) + "%", WHITE, (0,185))
                 if draw == True:
                     if animacio == True:
-                        sprite_player1 = 'Assets/explosió.png'
+                        sprite_player1 = 'assets/explosió.png'
                         player_image = pygame.image.load(sprite_player1)
-                        sprite_player2 = 'Assets/explosió.png'
+                        sprite_player2 = 'assets/explosió.png'
                         player_image2 = pygame.image.load(sprite_player2)
                         BACKGROUND_IMAGE = 'Assets/fondo.png'
                         background = pygame.image.load(BACKGROUND_IMAGE).convert()
@@ -536,8 +536,8 @@ while running:
             BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
             background = pygame.image.load(BACKGROUND_IMAGE).convert()
             partida = False
-            sprite_player1 = 'Assets/Nau.png'
-            sprite_player2 = 'Assets/Nau2.png'
+            sprite_player1 = 'assets/Nau.png'
+            sprite_player2 = 'assets/Nau2.png'
             player_image = pygame.image.load(sprite_player1)
             player_image2 = pygame.image.load(sprite_player2)
             try:
@@ -556,9 +556,3 @@ while running:
         pantalla.blit(player_image2, player_rect2)
         pygame.display.update()
         clock.tick(fps)
-
-    
-            
-
-
-
