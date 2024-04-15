@@ -4,7 +4,7 @@ import pygame
 
 AMPLADA = 320
 ALTURA = 200
-BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
+BACKGROUND_IMAGE = 'assets/TitleScreen.png'
 WHITE = (255,255,255)
 running = True
 partida = False
@@ -43,7 +43,7 @@ temps_partida = 300000 #5min
 
 pygame.init()
 #pygame.mixer.init()
-#pygame.mixer.music.load('Assets/musicadefons.mp3')
+#pygame.mixer.music.load('assets/musicadefons.mp3')
 #pygame.mixer.music.play(-1, 12, 3000)
 #pygame.mixer.music.set_volume(0.75)
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
@@ -118,7 +118,7 @@ while running:
 
     if partida == True:
        current_time = pygame.time.get_ticks()
-       BACKGROUND_IMAGE = 'Assets/fondo.png'
+       BACKGROUND_IMAGE = 'assets/fondo.png'
        pause = False
        videsjugador1 = 3
        videsjugador2 = 3
@@ -221,7 +221,7 @@ while running:
                     print("Queda", videsjugador2, "vides al jugador 2!")
                     sprite_player2 = 'assets/explosió.png'
                     player_image2 = pygame.image.load(sprite_player2)
-                    BACKGROUND_IMAGE = 'Assets/fondo.png'
+                    BACKGROUND_IMAGE = 'assets/fondo.png'
                     background = pygame.image.load(BACKGROUND_IMAGE).convert()
                     pantalla.blit(background, (0, 0))
                     pantalla.blit(player_image, player_rect)
@@ -284,7 +284,7 @@ while running:
                     print("Queda", videsjugador1, "vides al jugador 1!")
                     sprite_player1 = 'assets/explosió.png'
                     player_image = pygame.image.load(sprite_player1)
-                    BACKGROUND_IMAGE = 'Assets/fondo.png'
+                    BACKGROUND_IMAGE = 'assets/fondo.png'
                     background = pygame.image.load(BACKGROUND_IMAGE).convert()
                     pantalla.blit(background, (0, 0))
                     pantalla.blit(player_image, player_rect)
@@ -471,7 +471,7 @@ while running:
                     if animacio == True:
                         sprite_player1 = 'assets/explosió.png'
                         player_image = pygame.image.load(sprite_player1)
-                        BACKGROUND_IMAGE = 'Assets/fondo.png'
+                        BACKGROUND_IMAGE = 'assets/fondo.png'
                         background = pygame.image.load(BACKGROUND_IMAGE).convert()
                         pantalla.blit(background, (0, 0))
                         pantalla.blit(player_image, player_rect)
@@ -492,7 +492,7 @@ while running:
                     if animacio == True:
                         sprite_player2 = 'assets/explosió.png'
                         player_image2 = pygame.image.load(sprite_player2)
-                        BACKGROUND_IMAGE = 'Assets/fondo.png'
+                        BACKGROUND_IMAGE = 'assets/fondo.png'
                         background = pygame.image.load(BACKGROUND_IMAGE).convert()
                         pantalla.blit(background, (0, 0))
                         pantalla.blit(player_image, player_rect)
@@ -515,7 +515,7 @@ while running:
                         player_image = pygame.image.load(sprite_player1)
                         sprite_player2 = 'assets/explosió.png'
                         player_image2 = pygame.image.load(sprite_player2)
-                        BACKGROUND_IMAGE = 'Assets/fondo.png'
+                        BACKGROUND_IMAGE = 'assets/fondo.png'
                         background = pygame.image.load(BACKGROUND_IMAGE).convert()
                         pantalla.blit(background, (0, 0))
                         pantalla.blit(player_image, player_rect)
@@ -533,7 +533,7 @@ while running:
                     TextPantalla(pantalla,None,17,"Precisió jugador 2: "+ str(resultat_precisio_jugador2) + "%", WHITE, (0,185))                    
                 pygame.display.update()
             
-            BACKGROUND_IMAGE = 'Assets/TitleScreen.png'
+            BACKGROUND_IMAGE = 'assets/TitleScreen.png'
             background = pygame.image.load(BACKGROUND_IMAGE).convert()
             partida = False
             sprite_player1 = 'assets/Nau.png'
