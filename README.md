@@ -42,19 +42,43 @@ Benvinguts al meu repository de Python.
 - [Bateria 5.1](bateria5-1.py)
 - [Bateria 5.2](bateria5-2.py)
 
-## Projecte pygame
+## Projecte pygame - 1vs1
 ### Sprites
-#### Nau protagonista
-<img src="Pygame/1vs1/Assets/Nau.png" alt="Nau protagonista" width="100"/>
+#### Nau jugador 1
+<img src="Pygame/1vs1/Assets/Nau.png" alt="Nau 1" width="100"/>
 
-##### Trets nau protagonista
+#### Nau jugador 2
+<img src="Pygame/1vs1/Assets/Nau2.png" alt="Nau 2" width="100"/>
+
+##### Trets naus
 <table>
   <tr>
-<td><img src="Pygame/1vs1/Assets/tretnau.png" alt="Tret nau" width="100"/></td>
-<td><img src="Pygame/1vs1/Assets/tretnau2.png" alt="Tret nau 2" width="100"/></td>
-    </tr>
+    <td><img src="Pygame/1vs1/Assets/tretnau.png" alt="Tret nau" width="100"/></td>
+    <td><img src="Pygame/1vs1/Assets/tretnau2.png" alt="Tret nau 2" width="100"/></td>
+  </tr>
+</table>
+
+##### Vida i mort
+<table>
+  <tr>
+    <td><img src="Pygame/1vs1/Assets/cor1.0.png" alt="Cor" width="100"/></td>
+    <td><img src="Pygame/1vs1/Assets/explosió.png" alt="Explosió" width="100"/></td>
+  </tr>
+</table>
+
+##### Power ups
+<table>
+  <tr>
+    <td><img src="Pygame/1vs1/Assets/energia.png" alt="Energia" width="100"/></td>
+    <td><img src="Pygame/1vs1/Assets/escut.png" alt="Escut" width="100"/></td>
+    <td><img src="Pygame/1vs1/Assets/velocitat.png" alt="Velocitat" width="100"/></td>
+  </tr>
 </table>
 
 #### Backgrounds
 ##### Pantalla de títol
 ![Imatge de titol](Pygame/1vs1/Assets/TitleScreen.png)
+
+##### Pantalla de joc
+![Imatge de joc](Pygame/1vs1/Assets/fondo.png)
+
