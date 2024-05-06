@@ -10,6 +10,7 @@ WHITE = (255,255,255)
 running = True
 partida = False
 
+#La tortuga que nos da pena
 imatge_tortuga = pygame.image.load('assets/tortuga.png')
 temps_pause = 0
 
@@ -31,14 +32,16 @@ def TextPantalla(pantalla, font, tamany, text, color, posicio):
 #Imprimir el menu de inici de joc.
 def menuprincipal():
     pantalla.blit(background, (0,0))
-    seccio_transparent = pygame.Surface((320,200),pygame.SRCALPHA)
-    pygame.draw.rect(seccio_transparent,(0,0,0,100),(0,35,140,68))
-    pantalla.blit(seccio_transparent, (40, 40))
-    TextPantalla(pantalla, None, 24, "1.- Crèdits", WHITE, (50,80))
-    TextPantalla(pantalla, None, 24, "2.- Jugar", WHITE,(50,100))
-    TextPantalla(pantalla,None, 24, "3.- Sortir", WHITE, (50,120))
+    seccio_transparent = pygame.Surface((800,600),pygame.SRCALPHA)
+    pygame.draw.rect(seccio_transparent,(0,0,0,100),(225,110,350,380))
+    pantalla.blit(seccio_transparent, (0, 0))
+    TextPantalla(pantalla, 'Comic Sans MS', 40, "1.- Crèdits", WHITE, (256.25,120))
+    TextPantalla(pantalla, 'Comic Sans MS', 40, "2.- Jugar", WHITE,(256.25,190))
+    TextPantalla(pantalla, 'Comic Sans MS', 40, "3.- Score", WHITE,(256.25,260))
+    TextPantalla(pantalla, 'Comic Sans MS', 40, "4.- Sortir", WHITE, (256.25,330))
     pygame.display.update()
 
+menuprincipal()
 while running:
      
      for event in pygame.event.get():
