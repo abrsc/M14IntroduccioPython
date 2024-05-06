@@ -56,5 +56,5 @@ Benvinguts al meu repository de Python.
 </table>
 
 #### Backgrounds
-##### Pantalla de titol
+##### Pantalla de títol
 ![Imatge de titol](Pygame/1vs1/assets/TitleScreen.png)
