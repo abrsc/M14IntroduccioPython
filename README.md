@@ -44,11 +44,13 @@ Benvinguts al meu repository de Python.
 
 ## Projecte pygame - 1vs1
 ### Sprites
-#### Nau jugador 1
-<img src="Pygame/1vs1/Assets/Nau.png" alt="Nau 1" width="100"/>
-
-#### Nau jugador 2
-<img src="Pygame/1vs1/Assets/Nau2.png" alt="Nau 2" width="100"/>
+#### Nau jugador 1 i 2
+<table>
+  <tr>
+    <td><img src="Pygame/1vs1/Assets/Nau.png" alt="Nau 1" width="100"/></td>
+    <td><img src="Pygame/1vs1/Assets/Nau2.png" alt="Nau 2" width="100"/></td>
+  </tr>
+</table>
 
 ##### Trets naus
 <table>
@@ -76,9 +78,11 @@ Benvinguts al meu repository de Python.
 </table>
 
 #### Backgrounds
-##### Pantalla de títol
-![Imatge de titol](Pygame/1vs1/Assets/TitleScreen.png)
-
-##### Pantalla de joc
-![Imatge de joc](Pygame/1vs1/Assets/fondo.png)
+##### Pantalla de títol i de joc
+<table>
+  <tr>
+    <td><img src="Pygame/1vs1/Assets/TitleScreen.png" alt="Títol" width="320"/></td>
+    <td><img src="Pygame/1vs1/Assets/fondo.png" alt="Joc" width="320"/></td>
+  </tr>
+</table>
 
