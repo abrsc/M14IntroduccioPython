@@ -12,12 +12,17 @@ partida = False
 
 #Carregar la tortuga que nos da pena
 imatge_tortuga = pygame.image.load('assets/tortuga.png')
+
+#Carregar el suelo
+imatge_suelo = pygame.image.load('assets/suelo.png')
+
 temps_pause = 0
 
 pygame.init()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Flappy Turtle")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
+pos_x_suelo = 0
 
 #FPS
 clock = pygame.time.Clock()
@@ -27,6 +32,10 @@ fps = 60
 def imprimir_pantalla_fons(image):
     background = pygame.image.load(image).convert()
     pantalla.blit(background, (0, 0))
+
+def imprimir_suelo():
+    pantalla.blit(imatge_suelo, (pos_x_suelo, 482))
+    pantalla.blit(imatge_suelo,(pos_x_suelo + 800, 482))
 
 #Definició per imprimir text facilment.
 def TextPantalla(pantalla, font, tamany, text, color, posicio):
@@ -93,8 +102,9 @@ while running:
     if partida == True:
         current_time = pygame.time.get_ticks()
         BACKGROUND_IMAGE = 'assets/mar.png'
-        velocitat_tortuga = 6
         player_rect = imatge_tortuga.get_rect(midbottom=(AMPLADA // 4.5, ALTURA - 270))
+        gravitat = 0.2
+        velocitat_tortuga = 0
 
         while True:
             current_time = pygame.time.get_ticks()
@@ -103,12 +113,21 @@ while running:
                     pygame.quit()
                 if event.type == KEYDOWN:
                     if event.key == K_SPACE:
-                        player_rect.y -= velocitat_tortuga
+                        velocitat_tortuga = 0
+                        velocitat_tortuga -= 5.5
 
             # Mantenir al jugador dins de la pantalla:
             player_rect.clamp_ip(pantalla.get_rect())
             imprimir_pantalla_fons(BACKGROUND_IMAGE)
 
             pantalla.blit(imatge_tortuga, player_rect)
+            velocitat_tortuga += gravitat
+            player_rect.y += velocitat_tortuga
+
+            pos_x_suelo -= 1
+            imprimir_suelo()
+            if pos_x_suelo <= -800:
+                pos_x_suelo = 0
+
             pygame.display.update()
             clock.tick(fps)
