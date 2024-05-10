@@ -6,6 +6,7 @@ import pygame, random, time
 AMPLADA = 800
 ALTURA = 600
 BACKGROUND_IMAGE = 'assets/background.png'
+TITLE_BACKGROUND_IMAGE = 'assets/backgroundmenu.png'
 WHITE = (255,255,255)
 running = True
 partida = False
@@ -77,7 +78,7 @@ def credits():
 
 #Imprimir el menu de inici de joc.
 def menuprincipal():
-    pantalla.blit(background, (0,0))
+    imprimir_pantalla_fons(TITLE_BACKGROUND_IMAGE)
     recttransparent((0,0,0,100),(225,110,350,380))
     TextPantalla(pantalla, 'Comic Sans MS', 40, "1.- Crèdits", WHITE, (256.25,120+35))
     TextPantalla(pantalla, 'Comic Sans MS', 40, "2.- Jugar", WHITE,(256.25,190+35))
@@ -101,10 +102,10 @@ while running:
 
     if partida == True:
         current_time = pygame.time.get_ticks()
-        BACKGROUND_IMAGE = 'assets/mar.png'
         player_rect = imatge_tortuga.get_rect(midbottom=(AMPLADA // 4.5, ALTURA - 270))
         gravitat = 0.2
         velocitat_tortuga = 0
+        pause = False
 
         while True:
             current_time = pygame.time.get_ticks()
@@ -115,6 +116,14 @@ while running:
                     if event.key == K_SPACE:
                         velocitat_tortuga = 0
                         velocitat_tortuga -= 5.5
+                    #Pause
+                    if event.key == K_ESCAPE:
+                        pause = True
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pygame.mouse.get_pressed()[0]:
+                        movimiento_jugador = 0
+                        movimiento_jugador -= 5.5
+
 
             # Mantenir al jugador dins de la pantalla:
             player_rect.clamp_ip(pantalla.get_rect())
@@ -124,7 +133,23 @@ while running:
             velocitat_tortuga += gravitat
             player_rect.y += velocitat_tortuga
 
-            pos_x_suelo -= 1
+            if pause == True:
+                temps_pause = 0
+                temps_pause = current_time
+                imprimir_suelo()
+                recttransparent((0,0,0,150),(0,0,300,600))
+                TextPantalla(pantalla,None,50,"PAUSE",(WHITE),(92.5,85))
+                pygame.display.update()
+                while pause == True:
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()       
+                        if event.type == KEYDOWN:      
+                            if event.key == K_ESCAPE:
+                                pause = False
+                    current_time = pygame.time.get_ticks()
+
+            pos_x_suelo -= 2
             imprimir_suelo()
             if pos_x_suelo <= -800:
                 pos_x_suelo = 0
