@@ -34,6 +34,7 @@ def imprimir_pantalla_fons(image):
     background = pygame.image.load(image).convert()
     pantalla.blit(background, (0, 0))
 
+#Definició per imprimir el suelo 2 vegades (per què tiene un efecte de movimento)
 def imprimir_suelo():
     pantalla.blit(imatge_suelo, (pos_x_suelo, 482))
     pantalla.blit(imatge_suelo,(pos_x_suelo + 800, 482))
@@ -121,8 +122,8 @@ while running:
                         pause = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed()[0]:
-                        movimiento_jugador = 0
-                        movimiento_jugador -= 5.5
+                        velocitat_tortuga = 0
+                        velocitat_tortuga -= 5.5
 
 
             # Mantenir al jugador dins de la pantalla:
