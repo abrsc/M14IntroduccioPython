@@ -17,13 +17,28 @@ imatge_tortuga = pygame.image.load('assets/tortuga.png')
 #Carregar el suelo
 imatge_suelo = pygame.image.load('assets/suelo.png')
 
+#Carregar obstaculos
+imatge_obstaculo = pygame.image.load('assets/obstaculo.png')
+
+#Si tenem que calcular temps, necessitem aquesta variable per evitar que hi ha coses que apparecen si les intervales no són valides.
 temps_pause = 0
+
+temps_obstaculos = 1440 # 1,4 segons per obstaculo
+obstaculos = [] #Llista per guardar els obstaculos
+temps_ultim_obstaculo = 0
+velocitat_obstaculos = 4
+
+#variables
+gravitat = 0.2
+velocitat_tortuga = 0
+
 
 pygame.init()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Flappy Turtle")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
 pos_x_suelo = 0
+altures_obstaculos = [400,300,200]
 
 #FPS
 clock = pygame.time.Clock()
@@ -61,10 +76,10 @@ def credits():
                 time.sleep(0.02)
                 pantalla.blit(background, (0,0))
                 recttransparent((0,0,0,150),(175,0,450,600))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Programa: Arno B., Kristopher G., Xavi Sancho", (WHITE), (20,i))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Gràfics: Kristopher G.", (WHITE), (20,i+20))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Música: -", (WHITE), (20,i+38))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Efectes de so: -", (WHITE), (20,i+56))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Programa: Arno B., Kristopher G., Xavi Sancho", (WHITE), (120,i))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Gràfics: Kristopher G.", (WHITE), (120,i+20))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Música: -", (WHITE), (120,i+38))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Efectes de so: -", (WHITE), (120,i+56))
                 pygame.display.update()
             TextPantalla(pantalla,'Comic Sans MS',17, "Premeu la barra espaiadora per continuar..", (WHITE), (40,180))
             animaciocreditacabat = True
@@ -87,6 +102,8 @@ def menuprincipal():
     TextPantalla(pantalla, 'Comic Sans MS', 40, "4.- Sortir", WHITE, (256.25,330+35))
     pygame.display.update()
 
+
+
 menuprincipal()
 while running:
      
@@ -104,8 +121,6 @@ while running:
     if partida == True:
         current_time = pygame.time.get_ticks()
         player_rect = imatge_tortuga.get_rect(midbottom=(AMPLADA // 4.5, ALTURA - 270))
-        gravitat = 0.2
-        velocitat_tortuga = 0
         pause = False
 
         while True:
@@ -130,6 +145,21 @@ while running:
             player_rect.clamp_ip(pantalla.get_rect())
             imprimir_pantalla_fons(BACKGROUND_IMAGE)
 
+            for obstaculo in obstaculos:
+                obstaculo.x -= velocitat_obstaculos
+                if obstaculo.right < 0:
+                    obstaculos.remove(obstaculo)
+                else:
+                    pantalla.blit(imatge_obstaculo,obstaculo)
+            
+            if current_time - temps_ultim_obstaculo >= temps_obstaculos:
+                pos_aleatoria_obstaculo = random.choice(altures_obstaculos)
+                obstaculo_abajo = imatge_obstaculo.get_rect(midtop = (900,pos_aleatoria_obstaculo))
+                obstaculo_arriba = imatge_obstaculo.get_rect(midbottom = (900,pos_aleatoria_obstaculo-175))
+                obstaculos.append(pygame.Rect(obstaculo_abajo.topleft[0],obstaculo_abajo.topleft[1],125,600))
+                obstaculos.append(pygame.Rect(obstaculo_arriba.topleft[0],obstaculo_arriba.topleft[1],125,600))
+                temps_ultim_obstaculo = current_time
+
             pantalla.blit(imatge_tortuga, player_rect)
             velocitat_tortuga += gravitat
             player_rect.y += velocitat_tortuga
@@ -149,8 +179,9 @@ while running:
                             if event.key == K_ESCAPE:
                                 pause = False
                     current_time = pygame.time.get_ticks()
+                temps_ultim_obstaculo = current_time - temps_pause + temps_ultim_obstaculo
 
-            pos_x_suelo -= 2
+            pos_x_suelo -= 4
             imprimir_suelo()
             if pos_x_suelo <= -800:
                 pos_x_suelo = 0
