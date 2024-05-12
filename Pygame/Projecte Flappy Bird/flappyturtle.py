@@ -30,6 +30,7 @@ velocitat_obstaculos = 4
 gravitat = 0.2
 velocitat_tortuga = 0
 best_score = 0
+temps_entre_punts = 1440
 
 
 pygame.init()
@@ -128,6 +129,9 @@ while running:
         temps_ultim_obstaculo = 0 #La ultima vegada que va venir el obstaculo.
         pos_x_suelo = 0 #La posicio del suelo
         obstaculos = [] #Llista per guardar els obstaculos
+        temps_ultim_punt = current_time + 2500
+        if best_score > 0:
+            temps_ultim_punt = current_time + 1500 
 
 
 
@@ -181,8 +185,11 @@ while running:
                         pos_aleatoria_obstaculo = random.choice(altures_obstaculos)
                     comptador = 0
                 ultima_posicio = pos_aleatoria_obstaculo
-                
                 temps_ultim_obstaculo = current_time
+
+            if current_time - temps_ultim_punt >= temps_entre_punts:
+                score += 1
+                temps_ultim_punt = current_time
 
 
             pantalla.blit(imatge_tortuga, player_rect)
@@ -205,6 +212,7 @@ while running:
                                 pause = False
                     current_time = pygame.time.get_ticks()
                 temps_ultim_obstaculo = current_time - temps_pause + temps_ultim_obstaculo
+                temps_ultim_punt = current_time - temps_pause + temps_ultim_punt
 
             TextPantalla(pantalla,'Comic Sans MS', 40, str(score),(0,0,0),(380,0))
 
@@ -219,9 +227,7 @@ while running:
                 partida = False
                 try:
                     obstaculo_abajo = 0
-                    obstaculo_arriba = 0
-
-                    
+                    obstaculo_arriba = 0                    
                 except:
                     continue
                 menuprincipal()
