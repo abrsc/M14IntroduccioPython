@@ -27,6 +27,8 @@ temps_obstaculos = 1440 # 1,4 segons per obstaculo
 obstaculos = [] #Llista per guardar els obstaculos
 temps_ultim_obstaculo = 0
 velocitat_obstaculos = 4
+ultima_posicio = 0
+comptador = 0
 
 #variables
 gravitat = 0.2
@@ -38,7 +40,7 @@ pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Flappy Turtle")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
 pos_x_suelo = 0
-altures_obstaculos = [400,300,200]
+altures_obstaculos = [400,325,200]
 
 #FPS
 clock = pygame.time.Clock()
@@ -156,8 +158,16 @@ while running:
                 pos_aleatoria_obstaculo = random.choice(altures_obstaculos)
                 obstaculo_abajo = imatge_obstaculo.get_rect(midtop = (900,pos_aleatoria_obstaculo))
                 obstaculo_arriba = imatge_obstaculo.get_rect(midbottom = (900,pos_aleatoria_obstaculo-175))
-                obstaculos.append(pygame.Rect(obstaculo_abajo.topleft[0],obstaculo_abajo.topleft[1],125,600))
-                obstaculos.append(pygame.Rect(obstaculo_arriba.topleft[0],obstaculo_arriba.topleft[1],125,600))
+                obstaculos.append(pygame.Rect(obstaculo_abajo.topleft[0],obstaculo_abajo.topleft[1],100,600))
+                obstaculos.append(pygame.Rect(obstaculo_arriba.topleft[0],obstaculo_arriba.topleft[1],100,600))
+                if ultima_posicio == pos_aleatoria_obstaculo:
+                    comptador += 1
+                if comptador == 1:
+                    while ultima_posicio == pos_aleatoria_obstaculo:
+                        pos_aleatoria_obstaculo = random.choice(altures_obstaculos)
+                    comptador = 0
+                ultima_posicio = pos_aleatoria_obstaculo
+                
                 temps_ultim_obstaculo = current_time
 
             pantalla.blit(imatge_tortuga, player_rect)
