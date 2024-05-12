@@ -23,24 +23,21 @@ imatge_obstaculo = pygame.image.load('assets/obstaculo.png')
 #Si tenem que calcular temps, necessitem aquesta variable per evitar que hi ha coses que apparecen si les intervales no són valides.
 temps_pause = 0
 
-temps_obstaculos = 1440 # 1,4 segons per obstaculo
-obstaculos = [] #Llista per guardar els obstaculos
-temps_ultim_obstaculo = 0
+temps_obstaculos = 1440 # 1,4 segons entre obstacles
 velocitat_obstaculos = 4
-ultima_posicio = 0
-comptador = 0
 
-#variables
+#jugador
 gravitat = 0.2
 velocitat_tortuga = 0
+best_score = 0
 
 
 pygame.init()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Flappy Turtle")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
-pos_x_suelo = 0
 altures_obstaculos = [400,325,200]
+
 
 #FPS
 clock = pygame.time.Clock()
@@ -123,9 +120,18 @@ while running:
     if partida == True:
         current_time = pygame.time.get_ticks()
         player_rect = imatge_tortuga.get_rect(midbottom=(AMPLADA // 4.5, ALTURA - 270))
+        game_over = False
         pause = False
+        score = 0
+        comptador = 0 #Per evitar que els obstacles aparacen multiples veces seguides.
+        ultima_posicio = 0 #Per saber qué estava l'ultima posició dels obstacles.
+        temps_ultim_obstaculo = 0 #La ultima vegada que va venir el obstaculo.
+        pos_x_suelo = 0 #La posicio del suelo
+        obstaculos = [] #Llista per guardar els obstaculos
 
-        while True:
+
+
+        while partida:
             current_time = pygame.time.get_ticks()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -153,6 +159,14 @@ while running:
                     obstaculos.remove(obstaculo)
                 else:
                     pantalla.blit(imatge_obstaculo,obstaculo)
+                
+                if player_rect.colliderect(obstaculo):
+                    velocitat_tortuga = 0
+                    game_over = True
+                    
+            if player_rect.top < 2 or player_rect.bottom > 500:
+                velocitat_tortuga = 4
+                game_over = True
             
             if current_time - temps_ultim_obstaculo >= temps_obstaculos:
                 pos_aleatoria_obstaculo = random.choice(altures_obstaculos)
@@ -169,6 +183,7 @@ while running:
                 ultima_posicio = pos_aleatoria_obstaculo
                 
                 temps_ultim_obstaculo = current_time
+
 
             pantalla.blit(imatge_tortuga, player_rect)
             velocitat_tortuga += gravitat
@@ -191,10 +206,26 @@ while running:
                     current_time = pygame.time.get_ticks()
                 temps_ultim_obstaculo = current_time - temps_pause + temps_ultim_obstaculo
 
+            TextPantalla(pantalla,'Comic Sans MS', 40, str(score),(0,0,0),(380,0))
+
             pos_x_suelo -= 4
             imprimir_suelo()
             if pos_x_suelo <= -800:
                 pos_x_suelo = 0
+
+            if game_over == True:
+                if score > best_score:
+                    best_score = score
+                partida = False
+                try:
+                    obstaculo_abajo = 0
+                    obstaculo_arriba = 0
+
+                    
+                except:
+                    continue
+                menuprincipal()
+
 
             pygame.display.update()
             clock.tick(fps)
