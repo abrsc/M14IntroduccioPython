@@ -30,7 +30,7 @@ velocitat_obstaculos = 4
 gravitat = 0.2
 velocitat_tortuga = 0
 best_score = 0
-temps_entre_punts = 1440
+#temps_entre_punts = 1440
 
 
 pygame.init()
@@ -72,16 +72,17 @@ def credits():
     credits = True
     while credits == True:
         if animaciocreditacabat == False:
-            for i in range(0,60):
+            for i in range(0,150):
                 time.sleep(0.02)
                 pantalla.blit(background, (0,0))
                 recttransparent((0,0,0,150),(175,0,450,600))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Programa: Arno B., Kristopher G., Xavi Sancho", (WHITE), (120,i))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Gràfics: Kristopher G.", (WHITE), (120,i+20))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Música: -", (WHITE), (120,i+38))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Efectes de so: -", (WHITE), (120,i+56))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Programa: Arno B., Kristopher G., ", (WHITE), (200,i+20))
+                TextPantalla(pantalla, 'Comic Sans MS',22,"Xavi Sancho, Clear Code, Biel G.", (WHITE),(200,i+60))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Gràfics: Kristopher G.", (WHITE), (200,i+100))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Música: -", (WHITE), (200,i+140))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Efectes de so: -", (WHITE), (200,i+180))
                 pygame.display.update()
-            TextPantalla(pantalla,'Comic Sans MS',17, "Premeu la barra espaiadora per continuar..", (WHITE), (40,180))
+            TextPantalla(pantalla,'Comic Sans MS',17, "Premeu la barra espaiadora per continuar...", (WHITE), (225,390))
             animaciocreditacabat = True
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -129,9 +130,10 @@ while running:
         temps_ultim_obstaculo = 0 #La ultima vegada que va venir el obstaculo.
         pos_x_suelo = 0 #La posicio del suelo
         obstaculos = [] #Llista per guardar els obstaculos
-        temps_ultim_punt = current_time + 2500
-        if best_score > 0:
-            temps_ultim_punt = current_time + 1500 
+        score_possible = True
+        #temps_ultim_punt = current_time + 2500
+        #if best_score > 0:
+           # temps_ultim_punt = current_time + 1500 
 
 
 
@@ -167,7 +169,17 @@ while running:
                 if player_rect.colliderect(obstaculo):
                     velocitat_tortuga = 0
                     game_over = True
-                    
+            
+            #Per comptar el score cada vegada que el jugador està entre un obstaculo.
+            if obstaculos:
+                for obstaculo in obstaculos:
+                    if 95 < obstaculo.centerx < 105 and score_possible:
+                        score += 1
+                        score_possible = False
+                    if obstaculo.centerx < 0:
+                        score_possible = True
+
+
             if player_rect.top < 2 or player_rect.bottom > 500:
                 velocitat_tortuga = 4
                 game_over = True
@@ -187,9 +199,9 @@ while running:
                 ultima_posicio = pos_aleatoria_obstaculo
                 temps_ultim_obstaculo = current_time
 
-            if current_time - temps_ultim_punt >= temps_entre_punts:
-                score += 1
-                temps_ultim_punt = current_time
+            #if current_time - temps_ultim_punt >= temps_entre_punts:
+             #   score += 1
+              #  temps_ultim_punt = current_time
 
 
             pantalla.blit(imatge_tortuga, player_rect)
@@ -212,7 +224,7 @@ while running:
                                 pause = False
                     current_time = pygame.time.get_ticks()
                 temps_ultim_obstaculo = current_time - temps_pause + temps_ultim_obstaculo
-                temps_ultim_punt = current_time - temps_pause + temps_ultim_punt
+                #temps_ultim_punt = current_time - temps_pause + temps_ultim_punt
 
             TextPantalla(pantalla,'Comic Sans MS', 40, str(score),(0,0,0),(380,0))
 
