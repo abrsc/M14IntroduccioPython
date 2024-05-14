@@ -20,6 +20,7 @@ imatge_suelo = pygame.image.load('assets/suelo.png')
 #Carregar obstaculos
 imatge_obstaculo = pygame.image.load('assets/obstaculo.png')
 
+
 #Si tenem que calcular temps, necessitem aquesta variable per evitar que hi ha coses que apparecen si les intervales no són valides.
 temps_pause = 0
 
@@ -38,6 +39,8 @@ pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Flappy Turtle")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
 altures_obstaculos = [400,325,200]
+so_score = pygame.mixer.Sound('assets/sound_sfx_point.wav')
+so_mort = pygame.mixer.Sound('assets/sound_sfx_die.wav')
 
 
 #FPS
@@ -97,10 +100,10 @@ def credits():
 def menuprincipal():
     imprimir_pantalla_fons(TITLE_BACKGROUND_IMAGE)
     recttransparent((0,0,0,100),(225,110,350,380))
-    TextPantalla(pantalla, 'Comic Sans MS', 40, "1.- Crèdits", WHITE, (256.25,120+35))
-    TextPantalla(pantalla, 'Comic Sans MS', 40, "2.- Jugar", WHITE,(256.25,190+35))
-    TextPantalla(pantalla, 'Comic Sans MS', 40, "3.- Score", WHITE,(256.25,260+35))
-    TextPantalla(pantalla, 'Comic Sans MS', 40, "4.- Sortir", WHITE, (256.25,330+35))
+    TextPantalla(pantalla, 'Comic Sans MS', 36, "1.- Crèdits", WHITE, (256.25,120+35))
+    TextPantalla(pantalla, 'Comic Sans MS', 36, "2.- Score", WHITE,(256.25,190+35))
+    TextPantalla(pantalla, 'Comic Sans MS', 36, "Q.- Sortir", WHITE, (245,260+35))
+    TextPantalla(pantalla, 'Comic Sans MS', 20, "Premeu espai per jugar.", WHITE,(290,400+35))
     pygame.display.update()
 
 
@@ -114,10 +117,38 @@ while running:
         if event.type == KEYDOWN:
             if event.key == K_1:
                 credits()
-            if event.key == K_2:
+            if event.key == K_SPACE:
                 partida = True
-            if event.key == K_4:
+            if event.key == K_q:
                 running = False
+            if event.key == K_2:
+                animacio_infoscore = True
+                infoscore = True
+                while infoscore:
+                    if animacio_infoscore:
+                        imprimir_pantalla_fons(TITLE_BACKGROUND_IMAGE)
+                        recttransparent((0,0,0,150),(225,110,350,350))
+                        TextPantalla(pantalla,'Comic Sans MS',40,"Millor puntuació",(WHITE),(254,140))
+                        if best_score < 10:
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(350,200))
+                        elif best_score < 100:
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(318,200))
+                        elif best_score < 1000:
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(265,200))
+                        else:
+                            best_score = 999
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(310,200))
+                        TextPantalla(pantalla,'Comic Sans MS',16, "Premeu la barra espaiadora per continuar...", (WHITE), (242,430))    
+                        pygame.display.update()
+                        animacio_infoscore = False
+                    for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                pygame.quit()
+                            if event.type == KEYDOWN:
+                                if event.key == K_SPACE and animacio_infoscore == False:
+                                    infoscore = False
+                                    menuprincipal()
+                    pygame.display.update()
 
     if partida == True:
         current_time = pygame.time.get_ticks()
@@ -167,6 +198,7 @@ while running:
                     pantalla.blit(imatge_obstaculo,obstaculo)
                 
                 if player_rect.colliderect(obstaculo):
+                    so_mort.play()
                     velocitat_tortuga = 0
                     game_over = True
             
@@ -174,6 +206,7 @@ while running:
             if obstaculos:
                 for obstaculo in obstaculos:
                     if 95 < obstaculo.centerx < 105 and score_possible:
+                        so_score.play()
                         score += 1
                         score_possible = False
                     if obstaculo.centerx < 0:
