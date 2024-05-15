@@ -7,6 +7,7 @@ AMPLADA = 800
 ALTURA = 600
 BACKGROUND_IMAGE = 'assets/background.png'
 TITLE_BACKGROUND_IMAGE = 'assets/backgroundmenu.png'
+MAR = 'assets/mar.png'
 WHITE = (255,255,255)
 running = True
 partida = False
@@ -34,13 +35,25 @@ best_score = 0
 #temps_entre_punts = 1440
 
 
+
 pygame.init()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Flappy Turtle")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
 altures_obstaculos = [500,325,200]
+play_image = pygame.Surface((157,45))
+play_button = play_image.get_rect(topleft=(312, 250))
+score_image = pygame.Surface((157,45))
+score_button = score_image.get_rect(topleft=(312, 307))
+credits_image = pygame.Surface((157,45))
+credits_button = credits_image.get_rect(topleft=(312, 366))
+exit_image = pygame.Surface((157,45))
+exit_button = exit_image.get_rect(topleft=(312, 423))
 so_score = pygame.mixer.Sound('assets/sound_sfx_point.wav')
 so_mort = pygame.mixer.Sound('assets/sound_sfx_die.wav')
+musica = pygame.mixer.Sound('assets/coral_chorus.mp3')
+musica.play(loops=-1)
+musica.set_volume(0.3)
 
 
 #FPS
@@ -77,13 +90,13 @@ def credits():
         if animaciocreditacabat == False:
             for i in range(0,150):
                 time.sleep(0.02)
-                pantalla.blit(background, (0,0))
+                imprimir_pantalla_fons(MAR)
                 recttransparent((0,0,0,150),(175,0,450,600))
                 TextPantalla(pantalla,'Comic Sans MS',22, "Programa: Arno B., Kristopher G., ", (WHITE), (200,i+20))
                 TextPantalla(pantalla, 'Comic Sans MS',22,"Xavi Sancho, Clear Code, Biel G.", (WHITE),(200,i+60))
                 TextPantalla(pantalla,'Comic Sans MS',22, "Gràfics: Kristopher G.", (WHITE), (200,i+100))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Música: -", (WHITE), (200,i+140))
-                TextPantalla(pantalla,'Comic Sans MS',22, "Efectes de so: -", (WHITE), (200,i+180))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Música: Trap Music Now", (WHITE), (200,i+140))
+                TextPantalla(pantalla,'Comic Sans MS',22, "Efectes de so: Clear Code", (WHITE), (200,i+180))
                 pygame.display.update()
             TextPantalla(pantalla,'Comic Sans MS',17, "Premeu la barra espaiadora per continuar...", (WHITE), (225,390))
             animaciocreditacabat = True
@@ -99,11 +112,11 @@ def credits():
 #Imprimir el menu de inici de joc.
 def menuprincipal():
     imprimir_pantalla_fons(TITLE_BACKGROUND_IMAGE)
-    recttransparent((0,0,0,100),(225,110,350,380))
-    TextPantalla(pantalla, 'Comic Sans MS', 36, "1.- Crèdits", WHITE, (256.25,120+35))
-    TextPantalla(pantalla, 'Comic Sans MS', 36, "2.- Score", WHITE,(256.25,190+35))
-    TextPantalla(pantalla, 'Comic Sans MS', 36, "Q.- Sortir", WHITE, (245,260+35))
-    TextPantalla(pantalla, 'Comic Sans MS', 20, "Premeu espai per jugar.", WHITE,(290,400+35))
+    #recttransparent((0,0,0,100),(225,110,350,380))
+    #TextPantalla(pantalla, 'Comic Sans MS', 36, "1.- Crèdits", WHITE, (256.25,120+35))
+    #TextPantalla(pantalla, 'Comic Sans MS', 36, "2.- Score", WHITE,(256.25,190+35))
+    #TextPantalla(pantalla, 'Comic Sans MS', 36, "Q.- Sortir", WHITE, (245,260+35))
+    #TextPantalla(pantalla, 'Comic Sans MS', 20, "Premeu espai per jugar.", WHITE,(290,400+35))
     pygame.display.update()
 
 
@@ -115,18 +128,18 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
         if event.type == KEYDOWN:
-            if event.key == K_1:
+            if event.key == K_2:
                 credits()
             if event.key == K_SPACE:
                 partida = True
             if event.key == K_q:
                 running = False
-            if event.key == K_2:
+            if event.key == K_1:
                 animacio_infoscore = True
                 infoscore = True
                 while infoscore:
                     if animacio_infoscore:
-                        imprimir_pantalla_fons(TITLE_BACKGROUND_IMAGE)
+                        imprimir_pantalla_fons(MAR)
                         recttransparent((0,0,0,150),(225,110,350,350))
                         TextPantalla(pantalla,'Comic Sans MS',40,"Millor puntuació",(WHITE),(254,140))
                         if best_score < 10:
@@ -149,6 +162,42 @@ while running:
                                     infoscore = False
                                     menuprincipal()
                     pygame.display.update()
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if play_button.collidepoint(event.pos):
+                partida = True
+            if credits_button.collidepoint(event.pos):
+                credits()
+            if exit_button.collidepoint(event.pos):
+                running = False
+            if score_button.collidepoint(event.pos):
+                animacio_infoscore = True
+                infoscore = True
+                while infoscore:
+                    if animacio_infoscore:
+                        imprimir_pantalla_fons(MAR)
+                        recttransparent((0,0,0,150),(225,110,350,350))
+                        TextPantalla(pantalla,'Comic Sans MS',40,"Millor puntuació",(WHITE),(254,140))
+                        if best_score < 10:
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(350,200))
+                        elif best_score < 100:
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(318,200))
+                        elif best_score < 1000:
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(265,200))
+                        else:
+                            best_score = 999
+                            TextPantalla(pantalla,'Comic Sans MS',150,str(best_score),(WHITE),(310,200))
+                        TextPantalla(pantalla,'Comic Sans MS',16, "Premeu la barra espaiadora per continuar...", (WHITE), (242,430))    
+                        pygame.display.update()
+                        animacio_infoscore = False
+                    for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                pygame.quit()
+                            if event.type == KEYDOWN:
+                                if event.key == K_SPACE and animacio_infoscore == False:
+                                    infoscore = False
+                                    menuprincipal()
+
+
 
     if partida == True:
         current_time = pygame.time.get_ticks()
