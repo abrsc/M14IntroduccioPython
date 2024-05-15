@@ -38,7 +38,7 @@ best_score = 0
 
 pygame.init()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
-pygame.display.set_caption("Flappy Turtle")
+pygame.display.set_caption("Turtle Dive")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
 altures_obstaculos = [500,325,200]
 play_image = pygame.Surface((157,45))
