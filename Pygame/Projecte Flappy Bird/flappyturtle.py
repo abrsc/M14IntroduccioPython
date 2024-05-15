@@ -162,6 +162,7 @@ while running:
         pos_x_suelo = 0 #La posicio del suelo
         obstaculos = [] #Llista per guardar els obstaculos
         score_possible = True
+        comptador_so = 0
         #temps_ultim_punt = current_time + 2500
         #if best_score > 0:
            # temps_ultim_punt = current_time + 1500 
@@ -206,8 +207,11 @@ while running:
             if obstaculos:
                 for obstaculo in obstaculos:
                     if 95 < obstaculo.centerx < 105 and score_possible:
-                        so_score.play()
                         score += 1
+                        comptador_so += 1
+                        if comptador_so == 5:
+                            so_score.play()
+                            comptador_so = 0
                         score_possible = False
                     if obstaculo.centerx < 0:
                         score_possible = True
@@ -215,6 +219,7 @@ while running:
 
             if player_rect.top < 2 or player_rect.bottom > 500:
                 velocitat_tortuga = 4
+                so_mort.play()
                 game_over = True
             
             if current_time - temps_ultim_obstaculo >= temps_obstaculos:
