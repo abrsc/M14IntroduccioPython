@@ -176,14 +176,14 @@ while running:
                 if event.type == KEYDOWN:
                     if event.key == K_SPACE:
                         velocitat_tortuga = 0
-                        velocitat_tortuga -= 5.8
+                        velocitat_tortuga -= 6
                     #Pause
                     if event.key == K_ESCAPE:
                         pause = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed()[0]:
                         velocitat_tortuga = 0
-                        velocitat_tortuga -= 5.8
+                        velocitat_tortuga -= 6
 
 
             # Mantenir al jugador dins de la pantalla:
@@ -280,7 +280,7 @@ while running:
                 obstaculo.x -= velocitat_obstaculos
                 pantalla.blit(imatge_obstaculo,obstaculo)
 
-                
+
             if game_over == True:
                 if score > best_score:
                     best_score = score
