@@ -28,7 +28,7 @@ temps_obstaculos = 1440 # 1,4 segons entre obstacles
 velocitat_obstaculos = 4
 
 #jugador
-gravitat = 0.2
+gravitat = 0.27
 velocitat_tortuga = 0
 best_score = 0
 #temps_entre_punts = 1440
@@ -38,7 +38,7 @@ pygame.init()
 pantalla = pygame.display.set_mode((AMPLADA, ALTURA))
 pygame.display.set_caption("Flappy Turtle")
 background = pygame.image.load(BACKGROUND_IMAGE).convert()
-altures_obstaculos = [400,325,200]
+altures_obstaculos = [500,325,200]
 so_score = pygame.mixer.Sound('assets/sound_sfx_point.wav')
 so_mort = pygame.mixer.Sound('assets/sound_sfx_die.wav')
 
@@ -176,26 +176,26 @@ while running:
                 if event.type == KEYDOWN:
                     if event.key == K_SPACE:
                         velocitat_tortuga = 0
-                        velocitat_tortuga -= 5.5
+                        velocitat_tortuga -= 5.8
                     #Pause
                     if event.key == K_ESCAPE:
                         pause = True
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed()[0]:
                         velocitat_tortuga = 0
-                        velocitat_tortuga -= 5.5
+                        velocitat_tortuga -= 5.8
 
 
             # Mantenir al jugador dins de la pantalla:
             player_rect.clamp_ip(pantalla.get_rect())
             imprimir_pantalla_fons(BACKGROUND_IMAGE)
 
-            for obstaculo in obstaculos:
-                obstaculo.x -= velocitat_obstaculos
+
+            for obstaculo in obstaculos:    
                 if obstaculo.right < 0:
                     obstaculos.remove(obstaculo)
-                else:
-                    pantalla.blit(imatge_obstaculo,obstaculo)
+                #else:
+                #    pantalla.blit(imatge_obstaculo,obstaculo)
                 
                 if player_rect.colliderect(obstaculo):
                     so_mort.play()
@@ -221,8 +221,8 @@ while running:
                 pos_aleatoria_obstaculo = random.choice(altures_obstaculos)
                 obstaculo_abajo = imatge_obstaculo.get_rect(midtop = (900,pos_aleatoria_obstaculo))
                 obstaculo_arriba = imatge_obstaculo.get_rect(midbottom = (900,pos_aleatoria_obstaculo-175))
-                obstaculos.append(pygame.Rect(obstaculo_abajo.topleft[0],obstaculo_abajo.topleft[1],100,600))
-                obstaculos.append(pygame.Rect(obstaculo_arriba.topleft[0],obstaculo_arriba.topleft[1],100,600))
+                obstaculos.append(pygame.Rect(obstaculo_abajo.topleft[0],obstaculo_abajo.topleft[1],125,600))
+                obstaculos.append(pygame.Rect(obstaculo_arriba.topleft[0],obstaculo_arriba.topleft[1],125,600))
                 if ultima_posicio == pos_aleatoria_obstaculo:
                     comptador += 1
                 if comptador == 1:
@@ -247,6 +247,9 @@ while running:
                 imprimir_suelo()
                 recttransparent((0,0,0,150),(0,0,300,600))
                 TextPantalla(pantalla,None,50,"PAUSE",(WHITE),(92.5,85))
+                TextPantalla(pantalla,None,35,"ESC.- Resumir",(WHITE),(20,155))
+                TextPantalla(pantalla,None,35,"M.- Menù principal",(WHITE),(20,200))
+                TextPantalla(pantalla,None,35,"Q.- Quitar joc",(WHITE),(20,245))
                 pygame.display.update()
                 while pause == True:
                     for event in pygame.event.get():
@@ -255,6 +258,13 @@ while running:
                         if event.type == KEYDOWN:      
                             if event.key == K_ESCAPE:
                                 pause = False
+                            if event.key == K_m:
+                                pause = False
+                                game_over = True
+                            if event.key == K_q:
+                                pause = False
+                                partida = False
+                                running = False
                     current_time = pygame.time.get_ticks()
                 temps_ultim_obstaculo = current_time - temps_pause + temps_ultim_obstaculo
                 #temps_ultim_punt = current_time - temps_pause + temps_ultim_punt
@@ -266,15 +276,17 @@ while running:
             if pos_x_suelo <= -800:
                 pos_x_suelo = 0
 
+            for obstaculo in obstaculos:
+                obstaculo.x -= velocitat_obstaculos
+                pantalla.blit(imatge_obstaculo,obstaculo)
+
+                
             if game_over == True:
                 if score > best_score:
                     best_score = score
                 partida = False
-                try:
-                    obstaculo_abajo = 0
-                    obstaculo_arriba = 0                    
-                except:
-                    continue
+                obstaculo_abajo = 0
+                obstaculo_arriba = 0                    
                 menuprincipal()
 
 
